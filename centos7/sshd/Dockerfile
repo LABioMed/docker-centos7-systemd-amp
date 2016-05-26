@@ -13,7 +13,6 @@ RUN yum -y update &&\
  ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' &&\
  echo 'OPTIONS="-o UseDNS=no -o UsePAM=no -o PasswordAuthentication=yes"' >> /etc/sysconfig/sshd &&\
  systemctl enable sshd.service
-COPY .ssh/sshkey.pub /home/$USERNAME/.ssh/authorized_keys
 RUN chown $USERNAME:$USERNAME /home/$USERNAME/.ssh -R
 
 EXPOSE 22
