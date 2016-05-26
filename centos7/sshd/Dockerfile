@@ -7,6 +7,7 @@ RUN yum -y update &&\
  openssh-server\
  openssh-clients\
  passwd &&\
+ yum clean all &&\
  mkdir -p /var/run/sshd &&\
  ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N '' &&\
  ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' &&\
