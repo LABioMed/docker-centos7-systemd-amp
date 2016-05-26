@@ -16,9 +16,5 @@ EXPOSE 80
 ONBUILD ARG HTTPD_USER
 ONBUILD ENV HTTPD_USER="$HTTPD_USER"
 
-<<<<<<< HEAD
-ONBUILD RUN /docker-onbuild.sh CMD ["/usr/sbin/init"]
-=======
 ONBUILD RUN /docker-onbuild.sh
 CMD ["/usr/sbin/init"]
->>>>>>> origin/master
