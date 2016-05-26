@@ -15,7 +15,7 @@ RUN mkdir -p /usr/lib/systemd/system/httpd.service.d &&\
 EnvironmentFile=/etc/environment\n"\
  > /usr/lib/systemd/system/httpd.service.d/environment.conf
 
-COPY app/00-base.conf /etc/httpd/conf.modules.d/
+COPY 00-base.conf /etc/httpd/conf.modules.d/
 
 EXPOSE 80
 ONBUILD ARG HTTPD_USER
