@@ -13,6 +13,9 @@ RUN yum -y update &&\
  rm -f /lib/systemd/system/basic.target.wants/*;\
  rm -f /lib/systemd/system/anaconda.target.wants/*;
 
+RUN touch /etc/profile.d/environment-variables &&\
+ chmod 755 /etc/profile.d/environment-variables
+
 VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
 
 CMD ["/usr/sbin/init"]

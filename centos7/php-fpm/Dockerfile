@@ -26,10 +26,13 @@ RUN systemctl enable php-fpm.service
 
 EXPOSE 9000
 
-ONBUILD ARG PHP_USER
-ONBUILD ENV PHP_USER="$PHP_USER"
-ONBUILD RUN if [ ! -z "$PHP_USER" ]; then\
- usermod -u 1000 "$PHP_USER";\
+ONBUILD ARG USERNAME
+ONBUILD ENV USERNAME="$USERNAME"
+ONBUILD RUN if [ ! -z "$USERNAME" ]; then\
+ useradd -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
+ echo "$USERNAME":"$USERNAME" | chpasswd &&\
+ mkdir -p /home/$USERNAME &&\
+ chown $USERNAME:$USERNAME /home/$USERNAME;\
 fi
 
 CMD ["/usr/sbin/init"]

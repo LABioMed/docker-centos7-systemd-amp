@@ -12,18 +12,23 @@ RUN yum -y update &&\
 
 RUN mkdir -p /usr/lib/systemd/system/httpd.service.d &&\
  printf "[Service]\n\
-EnvironmentFile=/etc/environment\n"\
+EnvironmentFile=/etc/profile.d/environment-variables\n"\
  > /usr/lib/systemd/system/httpd.service.d/environment.conf
 
 COPY 00-base.conf /etc/httpd/conf.modules.d/
 
 EXPOSE 80
-ONBUILD ARG HTTPD_USER
-ONBUILD ENV HTTPD_USER="$HTTPD_USER"
-ONBUILD RUN if [ ! -z "$HTTPD_USER" ]; then\
- sed -i "s@\("^User" * *\).*@\1$HTTPD_USER@" /etc/httpd/conf/httpd.conf &&\
- sed -i "s@\("^Group" * *\).*@\1$HTTPD_USER@" /etc/httpd/conf/httpd.conf &&\
- chgrp $SITENAME /var/log/httpd &&\
+
+ONBUILD ARG USERNAME
+ONBUILD ENV USERNAME="$USERNAME"
+ONBUILD RUN if [ ! -z "$USERNAME" ]; then\
+ useradd -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
+ echo "$USERNAME":"$USERNAME" | chpasswd &&\
+ mkdir -p /home/$USERNAME &&\
+ chown $USERNAME:$USERNAME /home/$USERNAME &&\
+ sed -i "s@\("^User" * *\).*@\1$USERNAME@" /etc/httpd/conf/httpd.conf &&\
+ sed -i "s@\("^Group" * *\).*@\1$USERNAME@" /etc/httpd/conf/httpd.conf &&\
+ chgrp $USERNAME /var/log/httpd &&\
  chmod g+rx /var/log/httpd;\
 fi
 
