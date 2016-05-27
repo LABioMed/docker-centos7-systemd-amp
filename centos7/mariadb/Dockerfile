@@ -1,4 +1,4 @@
-FROM labiomed/centos7-systemd
+FROM labiomed/centos7-systemd:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ENV MARIADB_MAJOR=10.1
