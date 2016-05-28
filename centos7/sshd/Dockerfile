@@ -11,6 +11,18 @@ RUN yum -y update &&\
  ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' &&\
  systemctl enable sshd.service
 
+RUN RUN sed -i 's@GSSAPIAuthentication yes@#GSSAPIAuthentication yes@' /etc/ssh/sshd_config &&\
+ sed -i 's@GSSAPICleanupCredentials no@#GSSAPICleanupCredentials no@' /etc/ssh/sshd_config &&\
+ sed -i 's@UsePrivilegeSeparation sandbox		# Default for new installations.@UsePrivilegeSeparation yes@' /etc/ssh/sshd_config &&\
+ sed -i 's@#Port 22@Port 22@' /etc/ssh/sshd_config &&\
+ sed -i 's@#Protocol 2@Protocol 2@' /etc/ssh/sshd_config &&\
+ sed -i 's@#LoginGraceTime 2m@LoginGraceTime 2m@' /etc/ssh/sshd_config &&\
+ sed -i 's@#PermitRootLogin yes@PermitRootLogin no@' /etc/ssh/sshd_config &&\
+ sed -i 's@#StrictModes yes@StrictModes yes@' /etc/ssh/sshd_config &&\
+ sed -i 's@#RSAAuthentication yes@RSAAuthentication yes@' /etc/ssh/sshd_config &&\
+ sed -i 's@#PubkeyAuthentication yes@PubkeyAuthentication yes@' /etc/ssh/sshd_config &&\
+ sed -i 's@PasswordAuthentication yes@PasswordAuthentication no@' /etc/ssh/sshd_config
+
 EXPOSE 22
 ONBUILD ARG USERNAME
 ONBUILD ARG KEYFILE
@@ -22,5 +34,3 @@ ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
  chmod 700 /home/$USERNAME/.ssh
 ONBUILD COPY $KEYFILE /home/$USERNAME/.ssh/authorized_keys
 ONBUILD RUN chown $USERNAME:$USERNAME /home/$USERNAME/.ssh -R
-
-CMD ["/usr/sbin/init"]

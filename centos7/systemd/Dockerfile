@@ -1,19 +1,36 @@
 FROM centos:centos7
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
-ONBUILD ENV container docker
-ONBUILD RUN yum -y update &&\
+ENV container docker
+RUN yum -y update &&\
  yum clean all &&\
-(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done);\
- rm -f /lib/systemd/system/multi-user.target.wants/*;\
- rm -f /etc/systemd/system/*.wants/*;\
- rm -f /lib/systemd/system/local-fs.target.wants/*; \
- rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
- rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
- rm -f /lib/systemd/system/basic.target.wants/*;\
- rm -f /lib/systemd/system/anaconda.target.wants/*;
+ yum -y swap\
+ --\
+ remove systemd-container\
+ systemd-container-libs\
+ --\
+ install\
+ systemd\
+ systemd-libs\
+ dbus
+RUN systemctl mask\
+ dev-mqueue.mount\
+ dev-hugepages.mount\
+ systemd-remount-fs.service\
+ sys-kernel-config.mount\
+ sys-kernel-debug.mount\
+ sys-fs-fuse-connections.mount\
+ display-manager.service\
+ graphical.target\
+ systemd-logind.service
 
-ONBUILD RUN touch /etc/profile.d/environment-variables &&\
+ADD dbus.service /etc/systemd/system/dbus.service
+RUN systemctl enable dbus.service
+
+RUN touch /etc/profile.d/environment-variables &&\
  chmod 755 /etc/profile.d/environment-variables
 
-ONBUILD VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
+VOLUME ["/sys/fs/cgroup"]
+VOLUME ["/run"]
+
+CMD  ["/usr/lib/systemd/systemd"]
