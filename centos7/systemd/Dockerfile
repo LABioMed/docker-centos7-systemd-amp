@@ -12,6 +12,7 @@ RUN yum -y update &&\
  install\
  systemd\
  systemd-libs\
+ initscripts\
  dbus
 
 RUN systemctl mask\

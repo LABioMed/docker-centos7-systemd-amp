@@ -5,11 +5,10 @@ RUN yum -y update &&\
  yum clean all &&\
  yum -y install\
  openssh-server\
- initscripts\
  passwd &&\
  yum clean all &&\
- service sshd start &&\
- service sshd stop &&\
+ mkdir /var/run/sshd &&\
+ ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' &&\
  systemctl enable sshd.service
 
 #RUN sed -i 's@GSSAPIAuthentication yes@#GSSAPIAuthentication yes@' /etc/ssh/sshd_config &&\
