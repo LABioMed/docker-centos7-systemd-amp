@@ -28,11 +28,9 @@ EXPOSE 9000
 
 ONBUILD ARG USERNAME
 ONBUILD ENV USERNAME="$USERNAME"
-ONBUILD RUN if [ ! -z "$USERNAME" ]; then\
- useradd -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
+ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
  mkdir -p /home/$USERNAME &&\
- chown $USERNAME:$USERNAME /home/$USERNAME;\
-fi
+ chown $USERNAME:$USERNAME /home/$USERNAME
 
 CMD ["/usr/sbin/init"]

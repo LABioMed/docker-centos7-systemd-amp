@@ -17,4 +17,3 @@ ONBUILD RUN touch /etc/profile.d/environment-variables &&\
  chmod 755 /etc/profile.d/environment-variables
 
 ONBUILD VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
-
