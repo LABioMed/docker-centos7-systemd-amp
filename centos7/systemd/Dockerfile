@@ -1,8 +1,8 @@
 FROM centos:centos7
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
-ENV container docker
-RUN yum -y update &&\
+ONBUILD ENV container docker
+ONBUILD RUN yum -y update &&\
  yum clean all &&\
 (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done);\
  rm -f /lib/systemd/system/multi-user.target.wants/*;\
@@ -13,9 +13,8 @@ RUN yum -y update &&\
  rm -f /lib/systemd/system/basic.target.wants/*;\
  rm -f /lib/systemd/system/anaconda.target.wants/*;
 
-RUN touch /etc/profile.d/environment-variables &&\
+ONBUILD RUN touch /etc/profile.d/environment-variables &&\
  chmod 755 /etc/profile.d/environment-variables
 
-VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
+ONBUILD VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
 
-CMD ["/usr/sbin/init"]
