@@ -15,7 +15,7 @@ RUN yum -y update &&\
 RUN sed -i 's@UsePrivilegeSeparation sandbox.*@UsePrivilegeSeparation no@' /etc/ssh/sshd_config &&\
  sed -i 's@#UseDNS yes@UseDNS no@' /etc/ssh/sshd_config &&\
  sed -i 's@#Port 22@Port 22@' /etc/ssh/sshd_config &&\
- sed -i 's@#Protocol 2@Protocol 2@' /etc/ssh/sshd_config
+ sed -i 's@#Protocol 2@Protocol 2@' /etc/ssh/sshd_config &&\
  sed -i 's@#PermitRootLogin yes@PermitRootLogin no@' /etc/ssh/sshd_config &&\
  sed -i 's@#StrictModes yes@StrictModes yes@' /etc/ssh/sshd_config &&\
  sed -i 's@#RSAAuthentication yes@RSAAuthentication yes@' /etc/ssh/sshd_config &&\
