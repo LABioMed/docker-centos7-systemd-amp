@@ -29,5 +29,3 @@ ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
  sed -i "s@\("^Group" * *\).*@\1$USERNAME@" /etc/httpd/conf/httpd.conf &&\
  chgrp $USERNAME /var/log/httpd &&\
  chmod g+rx /var/log/httpd
-
-CMD ["/usr/sbin/init"]

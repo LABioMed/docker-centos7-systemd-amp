@@ -32,5 +32,3 @@ ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
  mkdir -p /home/$USERNAME &&\
  chown $USERNAME:$USERNAME /home/$USERNAME
-
-CMD ["/usr/sbin/init"]
