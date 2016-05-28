@@ -13,6 +13,7 @@ RUN yum -y update &&\
  systemd\
  systemd-libs\
  dbus
+
 RUN systemctl mask\
  dev-mqueue.mount\
  dev-hugepages.mount\
@@ -32,5 +33,5 @@ RUN touch /etc/profile.d/environment-variables &&\
 
 VOLUME ["/sys/fs/cgroup"]
 VOLUME ["/run"]
-
-CMD  ["/usr/lib/systemd/systemd"]
+#ONBUILD VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
+CMD ["/usr/lib/systemd/systemd"]
