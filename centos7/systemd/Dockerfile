@@ -34,5 +34,4 @@ RUN touch /etc/profile.d/environment-variables &&\
 
 VOLUME ["/sys/fs/cgroup"]
 VOLUME ["/run"]
-#ONBUILD VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
 CMD ["/usr/lib/systemd/systemd"]
