@@ -3,9 +3,7 @@ MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ENV MARIADB_MAJOR=10.1
 
-RUN printf "# MariaDB 10.1 CentOS repository list - created 2015-11-30 13:13 UTC\n\
-# http://mariadb.org/mariadb/repositories/\n\
-[mariadb]\n\
+RUN printf "[mariadb]\n\
 name = MariaDB\n\
 baseurl = http://yum.mariadb.org/10.1/centos7-amd64\n\
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n\
