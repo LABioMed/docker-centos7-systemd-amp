@@ -34,4 +34,6 @@ RUN touch /etc/profile.d/environment-variables &&\
 
 VOLUME ["/sys/fs/cgroup"]
 VOLUME ["/run"]
+VOLUME ["/etc/yum.repos.d"]
+VOLUME ["/var/lib/rpm"]
 CMD ["/usr/lib/systemd/systemd"]
