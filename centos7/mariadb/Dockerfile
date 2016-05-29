@@ -10,7 +10,7 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n\
 gpgcheck=1\n"\
  >> /etc/yum.repos.d/MariaDB.repo &&\
  cat /etc/yum.repos.d/MariaDB.repo &&\
- ls -la /etc/yum.repos.d/ &&\
+ for i in /etc/yum.repos.d/*; do echo "### $i ###" && cat "$i"; done &&\
  cat /etc/yum.conf
 
 RUN yum -y update &&\
