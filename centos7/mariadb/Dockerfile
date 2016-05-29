@@ -10,7 +10,8 @@ name = MariaDB\n\
 baseurl = http://yum.mariadb.org/10.1/centos7-amd64\n\
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n\
 gpgcheck=1"\
- >> /etc/yum.repos.d/MariaDB.repo
+ >> /etc/yum.repos.d/MariaDB.repo &&\
+ cat /etc/yum.repos.d/MariaDB.repo
 
 RUN yum -y update &&\
  yum clean all &&\
