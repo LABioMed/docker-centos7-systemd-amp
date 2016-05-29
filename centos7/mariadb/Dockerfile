@@ -5,21 +5,23 @@ ENV MARIADB_MAJOR=10.1
 
 RUN printf "[mariadb]\n\
 name = MariaDB\n\
-baseurl = http://yum.mariadb.org/10.1/centos7-amd64\n\
+baseurl = http://yum.mariadb.org/$MARIADB_MAJOR/centos7-amd64\n\
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n\
 gpgcheck=1\n"\
- >> /etc/yum.repos.d/MariaDB.repo &&\
- cat /etc/yum.repos.d/MariaDB.repo &&\
- for i in /etc/yum.repos.d/*; do echo "### $i ###" && cat "$i"; done &&\
- cat /etc/yum.conf
+ >> /etc/yum.repos.d/MariaDB.repo
 
 RUN yum -y update &&\
  yum clean all &&\
+ yum -y install\
+ epel-release &&\
+ rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB &&\
  yum -y install\
  MariaDB-server\
  MariaDB-client &&\
  yum clean all &&\
  mkdir /docker-entrypoint-initdb.d &&\
+ rm -rf /var/lib/mysql &&\
+ mkdir /var/lib/mysql &&\
  systemctl enable mariadb.service
 
 COPY server.cnf /etc/my.cnf.d/server.cnf
