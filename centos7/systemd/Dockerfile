@@ -32,8 +32,5 @@ RUN systemctl enable dbus.service
 RUN touch /etc/profile.d/environment-variables &&\
  chmod 755 /etc/profile.d/environment-variables
 
-VOLUME ["/sys/fs/cgroup"]
-VOLUME ["/run"]
-VOLUME ["/etc/yum.repos.d"]
-VOLUME ["/var/lib/rpm"]
+VOLUME ["/sys/fs/cgroup", "/run", "/etc/yum.repos.d", "/var/lib/rpm"]
 CMD ["/usr/lib/systemd/systemd"]
