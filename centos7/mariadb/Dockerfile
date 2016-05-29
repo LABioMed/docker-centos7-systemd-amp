@@ -15,7 +15,6 @@ gpgcheck=1"\
 
 RUN yum -y update &&\
  yum clean all &&\
- rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB &&\
  yum -y install\
  MariaDB-server\
  MariaDB-client &&\
