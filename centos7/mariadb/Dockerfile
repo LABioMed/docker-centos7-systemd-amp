@@ -20,7 +20,7 @@ RUN yum -y update &&\
  MariaDB-client &&\
  yum clean all &&\
  mkdir /docker-entrypoint-initdb.d &&\
- systemctl enable mariadb
+ systemctl enable mariadb.service
 
 COPY server.cnf /etc/my.cnf.d/server.cnf
 COPY docker-onbuild.sh /docker-onbuild.sh
