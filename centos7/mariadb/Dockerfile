@@ -7,7 +7,7 @@ RUN printf "[mariadb]\n\
 name = MariaDB\n\
 baseurl = http://yum.mariadb.org/10.1/centos7-amd64\n\
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n\
-gpgcheck=1"\
+gpgcheck=1\n"\
  >> /etc/yum.repos.d/MariaDB.repo &&\
  cat /etc/yum.repos.d/MariaDB.repo
 
