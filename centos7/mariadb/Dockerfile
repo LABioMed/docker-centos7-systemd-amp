@@ -3,7 +3,9 @@ MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ENV MARIADB_MAJOR=10.1
 
-RUN printf "[mariadb]\n\
+RUN printf "# MariaDB 10.1 CentOS repository list - created 2015-11-30 13:13 UTC\n\
+# http://mariadb.org/mariadb/repositories/\n\
+[mariadb]\n\
 name = MariaDB\n\
 baseurl = http://yum.mariadb.org/$MARIADB_MAJOR/centos7-amd64\n\
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n\
@@ -38,3 +40,5 @@ ONBUILD ENV MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD"\
  MYSQL_PASSWORD="$MYSQL_PASSWORD"
 
 ONBUILD RUN /docker-onbuild.sh
+
+VOLUME ["/etc/yum.repos.d", "/var/lib/rpm"]
