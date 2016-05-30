@@ -40,5 +40,3 @@ ONBUILD ENV MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD"\
  MYSQL_PASSWORD="$MYSQL_PASSWORD"
 
 ONBUILD RUN /docker-onbuild.sh
-
-VOLUME ["/etc/yum.repos.d", "/var/lib/rpm"]
