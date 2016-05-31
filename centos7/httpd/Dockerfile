@@ -12,7 +12,7 @@ RUN yum -y update &&\
 
 RUN mkdir -p /usr/lib/systemd/system/httpd.service.d &&\
  printf "[Service]\n\
-EnvironmentFile=/etc/profile.d/environment-variables\n"\
+EnvironmentFile=/etc/profile.d/environment-variables.sh\n"\
  > /usr/lib/systemd/system/httpd.service.d/environment.conf
 
 COPY 00-base.conf /etc/httpd/conf.modules.d/

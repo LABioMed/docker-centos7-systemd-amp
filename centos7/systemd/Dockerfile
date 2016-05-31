@@ -5,11 +5,10 @@ ENV container docker
 RUN yum -y update &&\
  yum clean all &&\
  yum -y swap\
- --\
- remove systemd-container\
+ -- remove\
+ systemd-container\
  systemd-container-libs\
- --\
- install\
+ -- install\
  systemd\
  systemd-libs\
  initscripts\
@@ -29,8 +28,8 @@ RUN systemctl mask\
 ADD dbus.service /etc/systemd/system/dbus.service
 RUN systemctl enable dbus.service
 
-RUN touch /etc/profile.d/environment-variables &&\
- chmod 755 /etc/profile.d/environment-variables
+RUN touch /etc/profile.d/environment-variables.sh &&\
+ chmod 755 /etc/profile.d/environment-variables.sh
 
 VOLUME ["/sys/fs/cgroup", "/run"]
 CMD ["/usr/lib/systemd/systemd"]
