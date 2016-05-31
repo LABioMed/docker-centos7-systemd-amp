@@ -1,6 +1,8 @@
 FROM labiomed/centos7-systemd:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
+ONBUILD ARG USERNAME
+ONBUILD ENV USERNAME="$USERNAME"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd
 
