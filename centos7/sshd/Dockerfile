@@ -16,7 +16,7 @@ ONBUILD ARG USERNAME
 ONBUILD ARG KEYFILE
 ONBUILD ENV USERNAME="$USERNAME" KEYFILE="$KEYFILE" UID="1024"
 
-ONBUILD RUN useradd --uid $UID -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
+ONBUILD RUN useradd -u $UID -d /home/$USERNAME -m -s /bin/bash $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
  mkdir -p /home/$USERNAME/.ssh &&\
  chmod 700 /home/$USERNAME/.ssh
