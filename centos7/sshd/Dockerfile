@@ -22,4 +22,5 @@ ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  mkdir -p /home/$USERNAME/.ssh &&\
  chmod 700 /home/$USERNAME/.ssh
 ONBUILD COPY $KEYFILE /home/$USERNAME/.ssh/authorized_keys
-ONBUILD RUN chown $USERNAME:$USERNAME /home/$USERNAME/.ssh -R
+ONBUILD RUN chown $USERNAME:$USERNAME /home/$USERNAME/.ssh -R &&\
+ chmod 600 /home/$USERNAME/.ssh/authorized_keys
