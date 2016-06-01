@@ -28,7 +28,7 @@ EXPOSE 9000
 
 ONBUILD ARG USERNAME
 ONBUILD ENV USERNAME="$USERNAME" UID="1024"
-ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid 1024 $USERNAME &&\
+ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
  mkdir -p /home/$USERNAME &&\
  chown $USERNAME:$USERNAME /home/$USERNAME
