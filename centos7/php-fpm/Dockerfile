@@ -27,7 +27,8 @@ RUN systemctl enable php-fpm.service
 EXPOSE 9000
 
 ONBUILD ARG USERNAME
-ONBUILD ENV USERNAME="$USERNAME" UID="1024"
+ONBUILD ARG UID
+ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
  mkdir -p /home/$USERNAME &&\

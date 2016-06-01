@@ -2,7 +2,8 @@ FROM labiomed/centos7-systemd:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ONBUILD ARG USERNAME
-ONBUILD ENV USERNAME="$USERNAME" UID="1024"
+ONBUILD ARG UID
+ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
  chown $USERNAME:$USERNAME /home/$USERNAME

@@ -20,7 +20,8 @@ COPY 00-base.conf /etc/httpd/conf.modules.d/
 EXPOSE 80
 
 ONBUILD ARG USERNAME
-ONBUILD ENV USERNAME="$USERNAME" UID="1024"
+ONBUILD ARG UID
+ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
  mkdir -p /home/$USERNAME &&\
