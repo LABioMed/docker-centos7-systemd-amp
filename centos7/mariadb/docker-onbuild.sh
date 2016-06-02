@@ -57,28 +57,33 @@ if [ ! -d "$DATADIR/mysql" ]; then
     fi
 
     if [ "$MYSQL_DATABASE" ]; then
+        echo "RUNNING: CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\` ;"
         echo "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\` ;" | "${mysql[@]}"
         mysql+=( "$MYSQL_DATABASE" )
     fi
 
     if [ "$MYSQL_USER" -a "$MYSQL_PASSWORD" ]; then
+        echo "RUNNING: CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' ;"
         echo "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' ;" | "${mysql[@]}"
 
         if [ "$MYSQL_DATABASE" ]; then
+            echo "RUNNING: GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'%' ;"
             echo "GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'%' ;" | "${mysql[@]}"
         fi
 
+        echo 'RUNNING: FLUSH PRIVILEGES ;'
         echo 'FLUSH PRIVILEGES ;' | "${mysql[@]}"
     fi
 
     echo
+    ls -la /docker-entrypoint-initdb.d/
     for f in /docker-entrypoint-initdb.d/*; do
         case "$f" in
             *.sh)  echo "$0: running $f"; . "$f" ;;
             *.sql) echo "$0: running $f"; "${mysql[@]}" < "$f" && echo ;;
             *)     echo "$0: ignoring $f" ;;
         esac
-        echo
+        echo "$f"
     done
 
     if ! kill -s TERM "$pid" || ! wait "$pid"; then
