@@ -28,8 +28,6 @@ ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  mkdir /home/$USERNAME-copy &&\
  for i in /home/$USERNAME/; do mv $i /home/$USERNAME-copy/; done &&\
  rm -rf /home/$USERNAME &&\
- mkdir /home/$USERNAME &&\
- for i in /home/$USERNAME-copy/; do mv $i /home/$USERNAME/$i; done &&\
- rm -rf /home/$USERNAME-copy &&\
+ mv /home/$USERNAME-copy/ /home/$USERNAME/ &&\
  chmod 755 /home/$USERNAME &&\
  chown $USERNAME:$USERNAME /home/$USERNAME
