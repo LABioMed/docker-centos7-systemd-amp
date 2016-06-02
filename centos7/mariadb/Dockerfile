@@ -27,7 +27,7 @@ RUN yum -y update &&\
  systemctl enable mariadb.service
 
 COPY server.cnf /etc/my.cnf.d/server.cnf
-COPY docker-onbuild.sh /docker-onbuild.sh
+COPY docker-entrypoint.sh /usr/local/bin/
 
 EXPOSE 3306
 ONBUILD ARG MYSQL_ROOT_PASSWORD
@@ -39,4 +39,4 @@ ONBUILD ENV MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD"\
  MYSQL_USER="$MYSQL_USER"\
  MYSQL_PASSWORD="$MYSQL_PASSWORD"
 
-ONBUILD RUN /docker-onbuild.sh
+ENTRYPOINT ["docker-entrypoint.sh"]

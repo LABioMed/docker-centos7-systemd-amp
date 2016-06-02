@@ -19,7 +19,7 @@ if [ ! -d "$DATADIR/mysql" ]; then
     mysql_install_db --user=mysql --datadir="$DATADIR" --rpm
     echo 'Database initialized'
 
-    mysqld --skip-networking &
+    mysql --skip-networking &
     pid="$!"
 
     mysql=( mysql --protocol=socket -uroot )
@@ -98,3 +98,5 @@ fi
 
 chown -R mysql:mysql "$DATADIR"
 echo "$@"
+
+exec "$@"
