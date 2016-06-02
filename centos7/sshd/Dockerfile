@@ -20,7 +20,5 @@ ONBUILD ENV USERNAME="$USERNAME" SSHTAR="$SSHTAR" UID="$UID"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
  chmod 755 /home/$USERNAME &&\
- mkdir /home/$USERNAME/.ssh &&\
- chown $USERNAME:$USERNAME /home/$USERNAME -R &&\
- chmod 700 /home/$USERNAME/.ssh
+ chown $USERNAME:$USERNAME /home/$USERNAME -R
 ONBUILD ADD $SSHTAR /home/$USERNAME/.ssh/
