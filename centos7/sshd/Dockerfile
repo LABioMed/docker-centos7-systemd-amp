@@ -19,8 +19,8 @@ ONBUILD ENV USERNAME="$USERNAME" AUTHORIZED_KEYS="$AUTHORIZED_KEYS" UID="$UID"
 
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
- chmod 755 /home/$USERNAME &&\
- chown $USERNAME:$USERNAME /home/$USERNAME -R
+ chmod 755 /home/$USERNAME
 ONBUILD COPY $AUTHORIZED_KEYS /home/$USERNAME/.ssh/authorized_keys
 ONBUILD RUN chmod 700 /home/$USERNAME/.ssh/ &&\
- chmod 600 /home/$USERNAME/.ssh/authorized_keys
+ chmod 600 /home/$USERNAME/.ssh/authorized_keys &&\
+ chown $USERNAME:$USERNAME /home/$USERNAME -R
