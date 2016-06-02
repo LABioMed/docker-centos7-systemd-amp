@@ -29,4 +29,4 @@ ONBUILD RUN chown $USERNAME:$USERNAME /home/$USERNAME/.ssh -R &&\
  rm -r /home/$USERNAME &&\
  mv /home/$USERNAME-copy /home/$USERNAME &&\
  chmod 755 /home/$USERNAME &&\
- chown $USERNAME:$USERNAME /home/$USERNAME &&\
+ chown $USERNAME:$USERNAME /home/$USERNAME
