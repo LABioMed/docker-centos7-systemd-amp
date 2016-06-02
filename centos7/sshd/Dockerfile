@@ -23,9 +23,9 @@ ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  chmod 700 /home/$USERNAME/.ssh
 ONBUILD COPY $KEYFILE /home/$USERNAME/.ssh/authorized_keys
 ONBUILD RUN chown $USERNAME:$USERNAME /home/$USERNAME/.ssh -R &&\
- chmod 600 /home/$USERNAME/.ssh/authorized_keys &&\
- mkdir /home/$USERNAME-copy &&\
- mv /home/$USERNAME/* /home/$USERNAME-copy/ &&\
+ chmod 600 /home/$USERNAME/.ssh/authorized_keys
+ONBUILD RUN mkdir /home/$USERNAME-copy &&\
+ for i in /home/$USERNAME/; do mv $i /home/$USERNAME-copy/; done &&\
  rm -r /home/$USERNAME &&\
  mv /home/$USERNAME-copy /home/$USERNAME &&\
  chmod 755 /home/$USERNAME &&\
