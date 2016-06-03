@@ -60,16 +60,14 @@ if [[ ! -d $VOLUME_HOME/mysql ]]; then
         esac
     done
 
-    if ! kill -s TERM "$pid" || ! wait "$pid"; then
-        echo >&2 'MySQL init process failed.'
-        exit 1
-    fi
-
     echo >&2
     echo >&2 'MySQL init process done. Ready for start up.'
     echo >&2
 fi
 
 chown -R mysql:mysql "$VOLUME_HOME"
+
+mysql=("${mysql[@]:1}")
+mysqladmin ${mysql[@]} shutdown
 
 exec "/usr/lib/systemd/systemd"
