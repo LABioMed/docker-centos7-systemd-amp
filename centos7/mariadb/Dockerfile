@@ -21,15 +21,20 @@ RUN yum -y update &&\
  MariaDB-server\
  MariaDB-client &&\
  yum clean all &&\
- mkdir /docker-entrypoint-initdb.d &&\
- rm -rf /var/lib/mysql &&\
- mkdir /var/lib/mysql &&\
+ mkdir /docker-entrypoint-initdb.d\
+ /var/log/mysql/ &&\
+ rm -rf /var/lib/mysql/*
+
+COPY fix-permissions.sh ./
+RUN ./fix-permissions.sh /var/lib/mysql/ &&\
+ ./fix-permissions.sh /var/log/mysql/ &&\
+ ./fix-permissions.sh /var/run/ &&\
  systemctl enable mariadb.service
 
 COPY server.cnf /etc/my.cnf.d/server.cnf
 COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod 775 /usr/local/bin/docker-entrypoint.sh
 
-EXPOSE 3306
 ONBUILD ARG MYSQL_ROOT_PASSWORD
 ONBUILD ARG MYSQL_DATABASE
 ONBUILD ARG MYSQL_USER
@@ -39,4 +44,6 @@ ONBUILD ENV MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD"\
  MYSQL_USER="$MYSQL_USER"\
  MYSQL_PASSWORD="$MYSQL_PASSWORD"
 
+USER 27
+EXPOSE 3306
 ENTRYPOINT ["docker-entrypoint.sh"]

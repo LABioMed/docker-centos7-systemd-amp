@@ -1,25 +1,23 @@
 #!/bin/bash
 
 VOLUME_HOME="/var/lib/mysql"
-
-if [[ ! -d "$VOLUME_HOME/mysql" ]]; then
+echo >&2 "out"
+if [[ ! -d $VOLUME_HOME/mysql ]]; then
+  echo >&2 "in"
   if [ -z "$MYSQL_ROOT_PASSWORD" -a -z "$MYSQL_ALLOW_EMPTY_PASSWORD" ]; then
     echo >&2 'error: database is uninitialized and MYSQL_ROOT_PASSWORD not set'
     echo >&2 '  Did you forget to add -e MYSQL_ROOT_PASSWORD=... ?'
     exit 1
   fi
 
-  mkdir -p "$VOLUME_HOME"
-  chown -R mysql:mysql "$VOLUME_HOME"
-
-  echo 'Initializing database'
+  echo >&2 'Initializing database'
   mysql_install_db --datadir="$VOLUME_HOME"
-  echo 'Database initialized'
+  echo >&2 'Database initialized'
 
   mysql=( mysqld_safe --protocol=socket -uroot )
   RET=1
   while [[ RET -ne 0 ]]; do
-    echo "=> Waiting for confirmation of MariaDB service startup"
+    echo >&2 "=> Waiting for confirmation of MariaDB service startup"
     sleep 5
     "${mysql[@]}" -e "status" > /dev/null 2>&1
     RET=$?
@@ -55,10 +53,10 @@ if [[ ! -d "$VOLUME_HOME/mysql" ]]; then
     ls -la /docker-entrypoint-initdb.d/
     for f in /docker-entrypoint-initdb.d/*; do
         case "$f" in
-            *.sh)     echo "$0: running $f"; . "$f" ;;
-            *.sql)    echo "$0: running $f"; "${mysql[@]}" < "$f" && echo ;;
-            *.sql.gz) echo "$0: running $f"; gunzip -c "$f" | "${mysql[@]}"; echo ;;
-            *)        echo "$0: ignoring $f" ;;
+            *.sh)     echo >&2 "$0: running $f"; . "$f" ;;
+            *.sql)    echo >&2 "$0: running $f"; "${mysql[@]}" < "$f" && echo ;;
+            *.sql.gz) echo >&2 "$0: running $f"; gunzip -c "$f" | "${mysql[@]}"; echo ;;
+            *)        echo >&2 "$0: ignoring $f" ;;
         esac
     done
 
@@ -67,11 +65,11 @@ if [[ ! -d "$VOLUME_HOME/mysql" ]]; then
         exit 1
     fi
 
-    echo
-    echo 'MySQL init process done. Ready for start up.'
-    echo
+    echo >&2
+    echo >&2 'MySQL init process done. Ready for start up.'
+    echo >&2
 fi
 
-chown -R mysql:mysql "$DATADIR"
+chown -R mysql:mysql "$VOLUME_HOME"
 
 exec "/usr/lib/systemd/systemd"
