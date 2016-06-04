@@ -2,15 +2,7 @@ FROM labiomed/centos7-systemd:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ENV MARIADB_MAJOR=10.1
-
-RUN printf "# MariaDB 10.1 CentOS repository list - created 2015-11-30 13:13 UTC\n\
-# http://mariadb.org/mariadb/repositories/\n\
-[mariadb]\n\
-name = MariaDB\n\
-baseurl = http://yum.mariadb.org/$MARIADB_MAJOR/centos7-amd64\n\
-gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n\
-gpgcheck=1\n"\
- >> /etc/yum.repos.d/MariaDB.repo
+ENV VOLUME_HOME=/var/lib/mysql
 
 RUN yum -y update &&\
  yum clean all &&\
@@ -19,26 +11,35 @@ RUN yum -y update &&\
  rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB &&\
  yum -y install\
  MariaDB-server\
- MariaDB-client &&\
+ MariaDB-client\
+ hostname\
+ net-tools\
+ pwgen\
+ expect &&\
  yum clean all &&\
+ rm -rf /var/lib/mysql/* &&\
  mkdir /docker-entrypoint-initdb.d\
  /var/log/mysql/
 
-COPY mysql-secure-installation.sh /usr/local/bin/
-RUN yum -y install expect &&\
- mysql-secure-installation.sh &&\
+RUN systemctl enable mariadb.service
+
+COPY my.cnf.d/* /etc/my.cnf.d/
+COPY mariadb-setup.sh /
+COPY mariadb-functions.sh /
+
+ONBUILD ARG MARIADB_ROOT_PASS
+ONBUILD ARG MARIADB_DATABASE
+ONBUILD ARG MARIADB_USER
+ONBUILD ARG MARIADB_PASS
+ONBUILD ENV MARIADB_ROOT_PASS="$MARIADB_ROOT_PASS"\
+ MARIADB_DATABASE="$MARIADB_DATABASE"\
+ MARIADB_USER="$MARIADB_USER"\
+ MARIADB_PASS="$MARIADB_PASS"
+ONBUILD RUN /mariadb-setup.sh &&\
  yum -y remove expect &&\
  yum clean all
 
-COPY fix-permissions.sh ./
-RUN ./fix-permissions.sh /var/lib/mysql/ &&\
- ./fix-permissions.sh /var/log/mysql/ &&\
- ./fix-permissions.sh /var/run/ &&\
- systemctl enable mariadb.service
-
-#COPY server.cnf /etc/my.cnf.d/server.cnf
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod 775 /usr/local/bin/docker-entrypoint.sh
+# Set TERM env to avoid mysql client error message "TERM environment variable not set" when running from inside the container
+ENV TERM xterm
 
 EXPOSE 3306
-ENTRYPOINT ["docker-entrypoint.sh"]
