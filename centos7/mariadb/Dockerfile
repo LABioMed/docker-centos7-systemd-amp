@@ -4,6 +4,15 @@ MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 ENV MARIADB_MAJOR=10.1
 ENV VOLUME_HOME=/var/lib/mysql
 
+RUN printf "# MariaDB 10.1 CentOS repository list - created 2015-11-30 13:13 UTC\n\
+# http://mariadb.org/mariadb/repositories/\n\
+[mariadb]\n\
+name = MariaDB\n\
+baseurl = http://yum.mariadb.org/10.1/centos7-amd64\n\
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n\
+gpgcheck=1\n"\
+ >> /etc/yum.repos.d/MariaDB.repo
+
 RUN yum -y update &&\
  yum clean all &&\
  yum -y install\
