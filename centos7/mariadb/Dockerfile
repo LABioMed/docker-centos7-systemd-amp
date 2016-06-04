@@ -24,7 +24,7 @@ RUN yum -y update &&\
 RUN systemctl enable mariadb.service
 
 COPY my.cnf.d/* /etc/my.cnf.d/
-COPY mariadb-setup.sh /
+COPY docker-entrypoint.sh /usr/local/bin/
 COPY mariadb-functions.sh /
 
 ONBUILD ARG MARIADB_ROOT_PASS
@@ -43,3 +43,5 @@ ONBUILD RUN /mariadb-setup.sh &&\
 ENV TERM xterm
 
 EXPOSE 3306
+
+ENTRYPOINT ["docker-entrypoint.sh"]

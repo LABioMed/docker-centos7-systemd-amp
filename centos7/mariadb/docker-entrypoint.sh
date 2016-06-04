@@ -21,3 +21,6 @@ show_db_status
 create_db_user
 secure_and_tidy_db
 terminate_db
+
+# Execute the systemd command from base image.
+exec "$@"
