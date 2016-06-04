@@ -44,8 +44,7 @@ ONBUILD ENV MARIADB_ROOT_PASS="$MARIADB_ROOT_PASS"\
  MARIADB_DATABASE="$MARIADB_DATABASE"\
  MARIADB_USER="$MARIADB_USER"\
  MARIADB_PASS="$MARIADB_PASS"
-ONBUILD RUN /mariadb-setup.sh &&\
- yum -y remove expect &&\
+ONBUILD RUN yum -y remove expect &&\
  yum clean all
 
 # Set TERM env to avoid mysql client error message "TERM environment variable not set" when running from inside the container
