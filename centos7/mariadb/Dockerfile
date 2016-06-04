@@ -36,16 +36,14 @@ COPY my.cnf.d/* /etc/my.cnf.d/
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY mariadb-functions.sh /
 
-ONBUILD ARG MARIADB_ROOT_PASS
-ONBUILD ARG MARIADB_DATABASE
-ONBUILD ARG MARIADB_USER
-ONBUILD ARG MARIADB_PASS
-ONBUILD ENV MARIADB_ROOT_PASS="$MARIADB_ROOT_PASS"\
+ARG MARIADB_ROOT_PASS
+ARG MARIADB_DATABASE
+ARG MARIADB_USER
+ARG MARIADB_PASS
+ENV MARIADB_ROOT_PASS="$MARIADB_ROOT_PASS"\
  MARIADB_DATABASE="$MARIADB_DATABASE"\
  MARIADB_USER="$MARIADB_USER"\
  MARIADB_PASS="$MARIADB_PASS"
-ONBUILD RUN yum -y remove expect &&\
- yum clean all
 
 # Set TERM env to avoid mysql client error message "TERM environment variable not set" when running from inside the container
 ENV TERM xterm

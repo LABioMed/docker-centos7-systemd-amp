@@ -131,5 +131,7 @@ function secure_and_tidy_db() {
 	expect eof
 	")
 
-echo "${SECURE_MYSQL}"
+    echo "${SECURE_MYSQL}"
+
+    yum -y remove expect && yum clean all
 }
