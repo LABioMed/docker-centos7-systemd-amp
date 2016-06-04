@@ -2,7 +2,9 @@
 
 #########################################################
 # Check in the loop (every 1s) if the database backend
-# service is already available for connections.
+#   service is already available for connections.
+# Globals:
+#   $ERROR_LOG
 #########################################################
 function wait_for_db() {
   set +e
@@ -21,7 +23,10 @@ function wait_for_db() {
 
 #########################################################
 # Check in the loop (every 1s) if the database backend
-# service is already available for connections.
+#   service is already available for connections.
+# Globals:
+#   $VOLUME_HOME
+#   $ERROR_LOG
 #########################################################
 function terminate_db() {
   local pid=$(cat ${VOLUME_HOME}/mysql.pid)
@@ -34,7 +39,7 @@ function terminate_db() {
 }
 
 #########################################################
-# Cals `mysql_install_db` if empty volume is detected.
+# Calls `mysql_install_db` if empty volume is detected.
 # Globals:
 #   $VOLUME_HOME
 #   $ERROR_LOG
@@ -64,7 +69,7 @@ function install_db() {
 
 #########################################################
 # Check in the loop (every 1s) if the database backend
-# service is already available for connections.
+#   service is already available for connections.
 # Globals:
 #   $MARIADB_USER
 #   $MARIADB_PASS
@@ -88,6 +93,9 @@ function create_db_user() {
   echo "========================================================================"
 }
 
+#########################################################
+# Output the current mysql database status.
+#########################################################
 function show_db_status() {
   echo "Showing DB status..." && echo
   mysql -uroot -e "status"
@@ -100,38 +108,38 @@ function show_db_status() {
 #   $MARIADB_ROOT_PASS=
 #########################################################
 function secure_and_tidy_db() {
-	SECURE_MYSQL=$(expect -c "
-	set timeout 3
-	spawn mysql_secure_installation
+  SECURE_MYSQL=$(expect -c "
+    set timeout 3
+    spawn mysql_secure_installation
 
-	expect \"Enter current password for root (enter for none):\"
-	send \"\r\"
+    expect \"Enter current password for root (enter for none):\"
+    send \"\r\"
 
-	expect \"Set root password? \[Y/n\]\"
-	send \"y\r\"
+    expect \"Set root password? \[Y/n\]\"
+    send \"y\r\"
 
-	expect \"New password:\"
-	send \"${MARIADB_ROOT_PASS}\r\"
+    expect \"New password:\"
+    send \"${MARIADB_ROOT_PASS}\r\"
 
-	expect \"Re-enter new password:\"
-	send \"${MARIADB_ROOT_PASS}\r\"
+    expect \"Re-enter new password:\"
+    send \"${MARIADB_ROOT_PASS}\r\"
 
-	expect \"Remove anonymous users? \[Y/n\]\"
-	send \"y\r\"
+    expect \"Remove anonymous users? \[Y/n\]\"
+    send \"y\r\"
 
-	expect \"Disallow root login remotely? \[Y/n\]\"
-	send \"n\r\"
+    expect \"Disallow root login remotely? \[Y/n\]\"
+    send \"n\r\"
 
-	expect \"Remove test database and access to it? \[Y/n\]\"
-	send \"y\r\"
+    expect \"Remove test database and access to it? \[Y/n\]\"
+    send \"y\r\"
 
-	expect \"Reload privilege tables now? \[Y/n\]\"
-	send \"y\r\"
+    expect \"Reload privilege tables now? \[Y/n\]\"
+    send \"y\r\"
 
-	expect eof
-	")
+    expect eof
+  ")
 
-    echo "${SECURE_MYSQL}"
+  echo "${SECURE_MYSQL}"
 
-    yum -y remove expect && yum clean all
+  yum -y remove expect && yum clean all
 }
