@@ -68,29 +68,47 @@ function install_db() {
 }
 
 #########################################################
-# Check in the loop (every 1s) if the database backend
-#   service is already available for connections.
+# Create database user and table.
 # Globals:
 #   $MARIADB_USER
 #   $MARIADB_PASS
+#   $MARIADB_DATABASE
 #########################################################
 function create_db_user() {
+  echo "Creating Database..." && echo
+  mysql -uroot -e "CREATE DATABASE IF NOT EXISTS '"${MYSQL_DATABASE}"'"
+
   echo "Creating DB user..." && echo
-  local users=$(mysql -s -e "SELECT count(User) FROM mysql.user WHERE User='${MARIADB_USER}'")
+  local users=$(mysql -s -e "SELECT count(User) FROM mysql.user WHERE User='"${MARIADB_USER}"'")
   if [[ ${users} == 0 ]]; then
-    echo "=> Creating MariaDB user '${MARIADB_USER}' with '${MARIADB_PASS}' password."
-    mysql -uroot -e "CREATE USER '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_PASS}'"
+    echo "=> Creating MariaDB user '"${MARIADB_USER}"' with '"${MARIADB_PASS}"' password."
+    mysql -uroot -e "CREATE USER '"${MARIADB_USER}"'@'%' IDENTIFIED BY '"${MARIADB_PASS}"'"
   else
-    echo "=> User '${MARIADB_USER}' exists, updating its password to '${MARIADB_PASS}'"
-    mysql -uroot -e "SET PASSWORD FOR '${MARIADB_USER}'@'%' = PASSWORD('${MARIADB_PASS}')"
+    echo "=> User '"${MARIADB_USER}"' exists, updating its password to '"${MARIADB_PASS}"'"
+    mysql -uroot -e "SET PASSWORD FOR '"${MARIADB_USER}"'@'%' = PASSWORD('"${MARIADB_PASS}"')"
   fi;
 
-  mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO '${MARIADB_USER}'@'%' WITH GRANT OPTION"
+  mysql -uroot -e "GRANT ALL PRIVILEGES ON '"${MARIADB_DATABASE}"'.* TO '"${MARIADB_USER}"'@'%'"
+  mysql -uroot -e "FLUSH PRIVILEGES"
 
-  echo "========================================================================"
-  echo "    You can now connect to this MariaDB Server using:                   "
-  echo "    mysql -u${MARIADB_USER} -p${MARIADB_PASS} -h<host>                      "
-  echo "========================================================================"
+  echo "================================================================================"
+  echo "  You can now connect to this MariaDB Server using:                             "
+  echo "  mysql -u"${MARIADB_USER}" -p"${MARIADB_PASS}" "${MARIADB_DATABASE}" -h<host>  "
+  echo "================================================================================"
+}
+
+function import_db_files() {
+  if [ "$MARIADB_DATABASE" ]; then
+    echo "Importing any available database files..." && echo
+    for f in /docker-entrypoint-initdb.d/*; do
+      case "$f" in
+        *.sh)     echo "MariaDB: running $f"; . "$f" ;;
+        *.sql)    echo "MariaDB: importing $f into ${MARIADB_DATABASE}"; mysql -uroot ${MARIADB_DATABASE} < "$f" && echo ;;
+        *.sql.gz) echo "MariaDB: importing $f into ${MARIADB_DATABASE}"; gunzip -c "$f" | mysql -uroot ${MARIADB_DATABASE}; echo ;;
+        *)        echo "MariaDB: ignoring $f" ;;
+      esac
+    done
+  fi
 }
 
 #########################################################

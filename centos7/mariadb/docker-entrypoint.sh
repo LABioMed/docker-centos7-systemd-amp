@@ -19,6 +19,7 @@ MYSQLD_SAFE_PID=$!
 wait_for_db
 show_db_status
 create_db_user
+import_db_files
 secure_and_tidy_db
 terminate_db
 

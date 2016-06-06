@@ -5,14 +5,12 @@ ENV container docker
 RUN yum -y update &&\
  yum clean all &&\
  yum -y swap\
- --\
- remove systemd-container\
+ -- remove\
+ systemd-container\
  systemd-container-libs\
- --\
- install\
+ -- install\
  systemd\
  systemd-libs\
- initscripts\
  dbus
 
 RUN systemctl mask\
