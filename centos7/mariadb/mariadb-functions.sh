@@ -119,10 +119,10 @@ function secure_and_tidy_db() {
     send \"y\r\"
 
     expect \"New password:\"
-    send \"${MARIADB_ROOT_PASS}\r\"
+    send \""${MARIADB_ROOT_PASS}"\r\"
 
     expect \"Re-enter new password:\"
-    send \"${MARIADB_ROOT_PASS}\r\"
+    send \""${MARIADB_ROOT_PASS}"\r\"
 
     expect \"Remove anonymous users? \[Y/n\]\"
     send \"y\r\"

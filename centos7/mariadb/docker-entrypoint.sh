@@ -8,7 +8,7 @@ ERROR_LOG="$VOLUME_HOME/error.log"
 MYSQLD_PID_FILE="$VOLUME_HOME/mysql.pid"
 
 # Trap INT and TERM signals to do clean DB shutdown
-trap terminate_db SIGINT SIGTERM
+#trap terminate_db SIGINT SIGTERM
 
 install_db
 tail -F $ERROR_LOG & # tail all db logs to stdout
@@ -23,4 +23,4 @@ secure_and_tidy_db
 terminate_db
 
 # Execute the systemd command from base image.
-exec "$@"
+exec "/usr/lib/systemd/systemd"
