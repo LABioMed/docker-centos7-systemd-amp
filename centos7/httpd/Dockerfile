@@ -71,7 +71,7 @@ ONBUILD ARG UID
 ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
- mkdir -p /home/$USERNAME &&\
+ mkdir -p /home/$USERNAME /etc/httpd/sites-available && /etc/httpd/sites-enabled &&\
  chown $USERNAME:$USERNAME /home/$USERNAME &&\
  sed -i "s@\("^User" * *\).*@\1$USERNAME@" /etc/httpd/conf/httpd.conf &&\
  sed -i "s@\("^Group" * *\).*@\1$USERNAME@" /etc/httpd/conf/httpd.conf &&\
