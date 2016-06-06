@@ -76,7 +76,7 @@ function install_db() {
 #########################################################
 function create_db_user() {
   echo "Creating Database..." && echo
-  mysql -uroot -e "CREATE DATABASE IF NOT EXISTS '"${MYSQL_DATABASE}"'"
+  mysql -uroot -e "CREATE DATABASE IF NOT EXISTS '"${MARIADB_DATABASE}"'"
 
   echo "Creating DB user..." && echo
   local users=$(mysql -s -e "SELECT count(User) FROM mysql.user WHERE User='"${MARIADB_USER}"'")
