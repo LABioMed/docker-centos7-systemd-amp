@@ -17,8 +17,21 @@ EnvironmentFile=/etc/profile.d/environment-variables.sh\n"\
 
 COPY 00-base.conf /etc/httpd/conf.modules.d/
 
+EXPOSE 80
+
+ONBUILD ARG USERNAME
+ONBUILD ARG UID
+ONBUILD ARG DOMAINNAME
+ONBUILD ENV USERNAME="$USERNAME" UID="$UID" DOMAINNAME="$DOMAINNAME"
+ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
+ echo "$USERNAME":"$USERNAME" | chpasswd &&\
+ mkdir -p /home/$USERNAME &&\
+ chown $USERNAME:$USERNAME /home/$USERNAME &&\
+ chgrp $USERNAME /var/log/httpd &&\
+ chmod g+rx /var/log/httpd
+
 # Replace the httpd.conf with our own, we then use virtualhost files in sub-images.
-RUN mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf-backup &&\
+ONBUILD RUN mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf-backup &&\
  printf "ServerRoot \"/etc/httpd\"\n"\
 "Listen 80\n"\
 "Include conf.modules.d/*.conf\n"\
@@ -59,19 +72,7 @@ RUN mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf-backup &&\
 "EnableSendfile on\n"\
 "IncludeOptional conf.d/*.conf\n"\
 "IncludeOptional sites-enabled/*.conf\n"\
- "$SITENAME"\
- "$SITENAME"\
+ "$USERNAME"\
+ "$USERNAME"\
  "$DOMAINNAME"\
  >> /etc/httpd/conf/httpd.conf
-
-EXPOSE 80
-
-ONBUILD ARG USERNAME
-ONBUILD ARG UID
-ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
-ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
- echo "$USERNAME":"$USERNAME" | chpasswd &&\
- mkdir -p /home/$USERNAME &&\
- chown $USERNAME:$USERNAME /home/$USERNAME &&\
- chgrp $USERNAME /var/log/httpd &&\
- chmod g+rx /var/log/httpd
