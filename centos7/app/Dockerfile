@@ -1,6 +1,8 @@
 FROM labiomed/centos7-systemd:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
+RUN mkdir -p /etc/httpd/sites-available /etc/httpd/sites-enabled
+
 ONBUILD ARG USERNAME
 ONBUILD ARG UID
 ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
