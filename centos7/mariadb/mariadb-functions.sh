@@ -76,7 +76,7 @@ function install_db() {
 #########################################################
 function create_db_user() {
   echo "Creating Database..." && echo
-  mysql -uroot -e "CREATE DATABASE IF NOT EXISTS '"${MARIADB_DATABASE}"'"
+  mysql -uroot -e "CREATE DATABASE IF NOT EXISTS "${MARIADB_DATABASE}
 
   echo "Creating DB user..." && echo
   local users=$(mysql -s -e "SELECT count(User) FROM mysql.user WHERE User='"${MARIADB_USER}"'")
@@ -88,7 +88,7 @@ function create_db_user() {
     mysql -uroot -e "SET PASSWORD FOR '"${MARIADB_USER}"'@'%' = PASSWORD('"${MARIADB_PASS}"')"
   fi;
 
-  mysql -uroot -e "GRANT ALL PRIVILEGES ON '"${MARIADB_DATABASE}"'.* TO '"${MARIADB_USER}"'@'%'"
+  mysql -uroot -e "GRANT ALL PRIVILEGES ON "${MARIADB_DATABASE}".* TO '"${MARIADB_USER}"'@'%'"
   mysql -uroot -e "FLUSH PRIVILEGES"
 
   echo "================================================================================"
