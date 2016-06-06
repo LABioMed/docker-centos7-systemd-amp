@@ -19,60 +19,48 @@ COPY 00-base.conf /etc/httpd/conf.modules.d/
 
 # Replace the httpd.conf with our own, we then use virtualhost files in sub-images.
 RUN mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf-backup &&\
- printf "ServerRoot \"/etc/httpd\"\n\
-Listen 80\n\
-Include conf.modules.d/*.conf\n\
-User %s\n\
-Group %s\n\
-ServerAdmin root@%s\n\
-<Directory />\n\
-  AllowOverride none\n\
-  Require all denied\n\
-</Directory>\n\
-DocumentRoot \"/var/www/%s/current/docroot\"\n\
-<Directory \"/var/www\">\n\
-  AllowOverride None\n\
-  Require all granted\n\
-</Directory>\n\
-<Directory \"/var/www/%s/current/docroot\">\n\
-  Options Indexes FollowSymLinks\n\
-  AllowOverride All\n\
-  Require all granted\n\
-</Directory>\n\
-<IfModule dir_module>\n\
-  DirectoryIndex index.html\n\
-</IfModule>\n\
-<Files \".ht*\">\n\
-  Require all denied\n\
-</Files>\n\
-ErrorLog \"logs/error_log\"\n\
-LogLevel warn\n\
-<IfModule log_config_module>\n\
-  LogFormat \"%%h %%l %%u %%t \\\\\"%%r\\\\\" %%>s %%b \\\\\"%%{Referer}i\\\\\" \\\\\"%%{User-Agent}i\\\\\"\" combined\n\
-  LogFormat \"%%h %%l %%u %%t \\\\\"%%r\\\\\" %%>s %%b\" common\n\
-  <IfModule logio_module>\n\
-    LogFormat \"%%h %%l %%u %%t \\\\\"%%r\\\\\" %%>s %%b \\\\\"%%{Referer}i\\\\\" \\\\\"%%{User-Agent}i\\\\\" %%I %%O\" combinedio\n\
-  </IfModule>\n\
-  CustomLog \"logs/access_log\" combined\n\
-</IfModule>\n\
-<IfModule mime_module>\n\
-  TypesConfig /etc/mime.types\n\
-  AddType application/x-compress .Z\n\
-  AddType application/x-gzip .gz .tgz\n\
-  AddType text/html .shtml\n\
-  AddOutputFilter INCLUDES .shtml\n\
-</IfModule>\n\k
-AddDefaultCharset UTF-8\n\
-<IfModule mime_magic_module>\n\
-  MIMEMagicFile conf/magic\n\
-</IfModule>\n\
-EnableSendfile on\n\
-IncludeOptional conf.d/*.conf\n\
-IncludeOptional sites-enabled/*.conf\n"\
+ printf "ServerRoot \"/etc/httpd\"\n"\
+"Listen 80\n"\
+"Include conf.modules.d/*.conf\n"\
+"User %s\n"\
+"Group %s\n"\
+"ServerAdmin root@%s\n"\
+"<Directory />\n"\
+"  AllowOverride none\n"\
+"  Require all denied\n"\
+"</Directory>\n"\
+"<IfModule dir_module>\n"\
+"  DirectoryIndex index.html\n"\
+"</IfModule>\n"\
+"<Files \".ht*\">\n"\
+"  Require all denied\n"\
+"</Files>\n"\
+"ErrorLog \"logs/error_log\"\n"\
+"LogLevel warn\n"\
+"<IfModule log_config_module>\n"\
+"  LogFormat \"%%h %%l %%u %%t \\\\\"%%r\\\\\" %%>s %%b \\\\\"%%{Referer}i\\\\\" \\\\\"%%{User-Agent}i\\\\\"\" combined\n"\
+"  LogFormat \"%%h %%l %%u %%t \\\\\"%%r\\\\\" %%>s %%b\" common\n"\
+"  <IfModule logio_module>\n"\
+"    LogFormat \"%%h %%l %%u %%t \\\\\"%%r\\\\\" %%>s %%b \\\\\"%%{Referer}i\\\\\" \\\\\"%%{User-Agent}i\\\\\" %%I %%O\" combinedio\n"\
+"  </IfModule>\n"\
+"  CustomLog \"logs/access_log\" combined\n"\
+"</IfModule>\n"\
+"<IfModule mime_module>\n"\
+"  TypesConfig /etc/mime.types\n"\
+"  AddType application/x-compress .Z\n"\
+"  AddType application/x-gzip .gz .tgz\n"\
+"  AddType text/html .shtml\n"\
+"  AddOutputFilter INCLUDES .shtml\n"\
+"</IfModule>\n"\
+"AddDefaultCharset UTF-8\n"\
+"<IfModule mime_magic_module>\n"\
+"  MIMEMagicFile conf/magic\n"\
+"</IfModule>\n"\
+"EnableSendfile on\n"\
+"IncludeOptional conf.d/*.conf\n"\
+"IncludeOptional sites-enabled/*.conf\n"\
  "$SITENAME"\
  "$SITENAME"\
- "$DOMAINNAME"\
- "$DOMAINNAME"\
  "$DOMAINNAME"\
  >> /etc/httpd/conf/httpd.conf
 
