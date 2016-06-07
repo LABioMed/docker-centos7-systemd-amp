@@ -43,8 +43,7 @@ RUN yum -y update &&\
  php-xml &&\
  yum clean all
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
- chown $USERNAME /usr/local/bin/composer && composer --version
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN mv /etc/php-fpm.conf /etc/php-fpm.com-backup &&\
 printf "include=/etc/php-fpm.d/*.conf\n"\
@@ -69,4 +68,4 @@ ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
  mkdir -p /home/$USERNAME &&\
- chown $USERNAME:$USERNAME /home/$USERNAME /var/log/php-fpm
+ chown $USERNAME:$USERNAME /home/$USERNAME /var/log/php-fpm /usr/local/bin/composer
