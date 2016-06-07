@@ -55,8 +55,7 @@ printf "include=/etc/php-fpm.d/*.conf\n"\
 "log_level = warning\n"\
  >> /etc/php-fpm.conf
 
-RUN mkdir /var/log/php-fpm &&\
- systemctl enable php-fpm.service &&\
+RUN systemctl enable php-fpm.service &&\
  yum clean all &&\
  rm -rf /tmp/yum*
 
