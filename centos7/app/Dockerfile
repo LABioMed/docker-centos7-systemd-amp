@@ -1,7 +1,6 @@
 FROM labiomed/centos7-systemd:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
-COPY generate-plain-environment-file /usr/local/bin/
 ONBUILD ARG USERNAME
 ONBUILD ARG UID
 ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
