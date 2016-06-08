@@ -61,7 +61,6 @@ RUN touch /etc/php.d/zz-variables.ini &&\
  printf "variables_order = 'EGPCS'\n"\
 "date.timezone = 'America/Los_Angeles'\n"\
  >> /etc/php.d/zz-variables.ini &&\
- ln -s ../zz-variables.ini /etc/php-zts.d/
  mkdir -p /usr/lib/systemd/system/php-fpm.service.d &&\
  printf "[Service]\n"\
 "EnvironmentFile=/etc/profile.d/environment-variables.sh\n"\
