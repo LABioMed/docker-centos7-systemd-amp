@@ -12,11 +12,13 @@ RUN yum -y update &&\
 
 RUN mkdir -p /usr/lib/systemd/system/httpd.service.d &&\
  printf "[Service]\n"\
-"EnvironmentFile=/etc/profile.d/environment-variables.sh\n"\
+"ExecStartPre=/usr/bin/bash -c \"/usr/local/bin/generate-httpd-environment-file\"\n"\
+"EnvironmentFile=/etc/profile.d/environment.env\n"\
  > /usr/lib/systemd/system/httpd.service.d/environment.conf
 
 RUN mkdir -p /etc/httpd/sites-available /etc/httpd/sites-enabled
 COPY 00-base.conf /etc/httpd/conf.modules.d/
+COPY generate-httpd-environment-file /usr/local/bin/
 
 EXPOSE 80
 
