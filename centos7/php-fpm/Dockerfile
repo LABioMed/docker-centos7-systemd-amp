@@ -1,21 +1,8 @@
 FROM labiomed/centos7-systemd:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
-ENV MARIADB_MAJOR=10.1
-RUN printf "# MariaDB %s CentOS repository list\n"\
-"# http://mariadb.org/mariadb/repositories/\n"\
-"[mariadb]\n"\
-"name = MariaDB\n"\
-"baseurl = http://yum.mariadb.org/%s/centos7-amd64\n"\
-"gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB\n"\
-"gpgcheck=1\n"\
- "$MARIADB_MAJOR"\
- "$MARIADB_MAJOR"\
- >> /etc/yum.repos.d/MariaDB.repo
-
-RUN yum -y update &&\
- yum clean all &&\
- yum -y install\
+# Install various web applications and php.
+RUN yum -y install\
  MariaDB-client\
  wget\
  patch\
@@ -41,34 +28,14 @@ RUN yum -y update &&\
  php-process\
  php-tidy\
  php-xml &&\
- yum clean all
+ yum clean all &&\
+ rm -rf /tmp/yum*
+
+COPY container /
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN mv /etc/php-fpm.conf /etc/php-fpm.conf-backup &&\
-printf "include=/etc/php-fpm.d/*.conf\n"\
-"\n"\
-"[global]\n"\
-"daemonize = no\n"\
-"pid = /var/run/php-fpm.pid\n"\
-"error_log = /var/log/php-fpm/daemon.log\n"\
-"log_level = warning\n"\
- >> /etc/php-fpm.conf
-
-# Make environment variables get sourced and passed to php-fpm.
-RUN touch /etc/php.d/zz-variables.ini &&\
- printf "variables_order = 'EGPCS'\n"\
-"date.timezone = 'America/Los_Angeles'\n"\
- >> /etc/php.d/zz-variables.ini &&\
- mkdir -p /usr/lib/systemd/system/php-fpm.service.d &&\
- printf "[Service]\n"\
-"ExecStartPre=/usr/bin/bash -c \"/usr/local/bin/generate-plain-environment-file\"\n"\
-"EnvironmentFile=/etc/profile.d/environment.env\n"\
- > /usr/lib/systemd/system/php-fpm.service.d/environment.conf
-
-RUN systemctl enable php-fpm.service &&\
- yum clean all &&\
- rm -rf /tmp/yum*
+RUN systemctl enable php-fpm.service
 
 EXPOSE 9000
 

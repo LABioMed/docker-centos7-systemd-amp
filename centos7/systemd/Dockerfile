@@ -1,6 +1,17 @@
 FROM centos:centos7
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
+COPY container /
+RUN chmod 755 /etc/profile.d/environment.sh
+
+# Make official MariaDB repo available on all images.
+ENV MARIADB_MAJOR=10.1
+RUN printf "$(cat /etc/yum.repos.d/MariaDB.repo)"\
+ "$MARIADB_MAJOR"\
+ "$MARIADB_MAJOR"\
+ > /etc/yum.repos.d/MariaDB.repo
+
+# Swap out fake systemd for real systemd and add dbus.
 ENV container docker
 RUN yum -y update &&\
  yum clean all &&\
@@ -13,6 +24,7 @@ RUN yum -y update &&\
  systemd-libs\
  dbus
 
+# Run some systemctl mask'ing.
 RUN systemctl mask\
  dev-mqueue.mount\
  dev-hugepages.mount\
@@ -24,14 +36,11 @@ RUN systemctl mask\
  graphical.target\
  systemd-logind.service
 
-COPY generate-plain-environment-file /usr/local/bin/
-ADD dbus.service /etc/systemd/system/dbus.service
+# Add a dbus service for systemd so we don't get dbus errors.
 RUN systemctl enable dbus.service
 
-RUN touch /etc/profile.d/environment.env &&\
- touch /etc/profile.d/environment.sh &&\
- chmod 755 /etc/profile.d/environment.sh
-
+# These volumes are required to be able to run systemctl commands.
 VOLUME ["/sys/fs/cgroup"]
 VOLUME ["/run"]
+
 CMD ["/usr/lib/systemd/systemd"]
