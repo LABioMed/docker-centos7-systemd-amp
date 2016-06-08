@@ -24,10 +24,12 @@ RUN systemctl mask\
  graphical.target\
  systemd-logind.service
 
+COPY generate-plain-environment-file /usr/local/bin/
 ADD dbus.service /etc/systemd/system/dbus.service
 RUN systemctl enable dbus.service
 
-RUN touch /etc/profile.d/environment-variables.sh &&\
+RUN rouch /etc/profile.d/environment.env &&\
+ touch /etc/profile.d/environment-variables.sh &&\
  chmod 755 /etc/profile.d/environment-variables.sh
 
 VOLUME ["/sys/fs/cgroup"]

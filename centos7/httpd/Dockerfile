@@ -18,7 +18,6 @@ RUN mkdir -p /usr/lib/systemd/system/httpd.service.d &&\
 
 RUN mkdir -p /etc/httpd/sites-available /etc/httpd/sites-enabled
 COPY 00-base.conf /etc/httpd/conf.modules.d/
-COPY generate-httpd-environment-file /usr/local/bin/
 
 EXPOSE 80
 
