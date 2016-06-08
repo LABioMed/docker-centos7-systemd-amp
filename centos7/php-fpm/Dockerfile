@@ -63,7 +63,7 @@ RUN touch /etc/php.d/zz-variables.ini &&\
  >> /etc/php.d/zz-variables.ini &&\
  mkdir -p /usr/lib/systemd/system/php-fpm.service.d &&\
  printf "[Service]\n"\
-"ExecStartPre=/usr/bin/bash -c \"/usr/local/bin/generate-httpd-environment-file\"\n"\
+"ExecStartPre=/usr/bin/bash -c \"/usr/local/bin/generate-plain-environment-file\"\n"\
 "EnvironmentFile=/etc/profile.d/environment.env\n"\
  > /usr/lib/systemd/system/php-fpm.service.d/environment.conf
 

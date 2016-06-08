@@ -12,7 +12,7 @@ RUN yum -y update &&\
 
 RUN mkdir -p /usr/lib/systemd/system/httpd.service.d &&\
  printf "[Service]\n"\
-"ExecStartPre=/usr/bin/bash -c \"/usr/local/bin/generate-httpd-environment-file\"\n"\
+"ExecStartPre=/usr/bin/bash -c \"/usr/local/bin/generate-plain-environment-file\"\n"\
 "EnvironmentFile=/etc/profile.d/environment.env\n"\
  > /usr/lib/systemd/system/httpd.service.d/environment.conf
 
