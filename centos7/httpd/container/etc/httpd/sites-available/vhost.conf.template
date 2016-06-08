@@ -1,0 +1,16 @@
+<VirtualHost *:80>
+  ServerAdmin admin@%s
+  ServerName %s.localdev
+  DocumentRoot /var/www/%s/current/docroot
+  ErrorLog /var/www/%s/logs/error.log
+  CustomLog /var/www/%s/logs/access.log combined
+  <Directory />
+    Options FollowSymLinks
+    DirectoryIndex index.php
+    AllowOverride All
+    Require all granted
+  </Directory>
+  <FilesMatch \.php$>
+    SetHandler "proxy:fcgi://php:9000"
+  </FilesMatch>
+</VirtualHost>

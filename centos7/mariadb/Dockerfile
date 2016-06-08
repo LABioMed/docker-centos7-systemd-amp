@@ -1,4 +1,4 @@
-FROM labiomed/centos7-systemd:base
+FROM local/centos7-systemd:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ENV VOLUME_HOME=/var/lib/mysql
