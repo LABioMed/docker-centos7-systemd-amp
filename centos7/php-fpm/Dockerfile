@@ -45,7 +45,7 @@ RUN yum -y update &&\
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN mv /etc/php-fpm.conf /etc/php-fpm.com-backup &&\
+RUN mv /etc/php-fpm.conf /etc/php-fpm.conf-backup &&\
 printf "include=/etc/php-fpm.d/*.conf\n"\
 "\n"\
 "[global]\n"\
@@ -53,7 +53,19 @@ printf "include=/etc/php-fpm.d/*.conf\n"\
 "pid = /var/run/php-fpm.pid\n"\
 "error_log = /var/log/php-fpm/daemon.log\n"\
 "log_level = warning\n"\
+"clear_env = no\n"\
  >> /etc/php-fpm.conf
+
+# Make environment variables get sourced and passed to php-fpm.
+RUN touch /etc/php.d/zz-variables.ini &&\
+ printf "variables_order = 'EGPCS'\n"\
+"date.timezone = 'America/Los_Angeles'\n"\
+ >> /etc/php.d/zz-variables.ini &&\
+ ln -s ../zz-variables.ini /etc/php-zts.d/
+ mkdir -p /usr/lib/systemd/system/php-fpm.service.d &&\
+ printf "[Service]\n"\
+"EnvironmentFile=/etc/profile.d/environment-variables.sh\n"\
+ > /usr/lib/systemd/system/php-fpm.service.d/environment.conf
 
 RUN systemctl enable php-fpm.service &&\
  yum clean all &&\
