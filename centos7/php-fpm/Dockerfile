@@ -53,7 +53,6 @@ printf "include=/etc/php-fpm.d/*.conf\n"\
 "pid = /var/run/php-fpm.pid\n"\
 "error_log = /var/log/php-fpm/daemon.log\n"\
 "log_level = warning\n"\
-"clear_env = no\n"\
  >> /etc/php-fpm.conf
 
 # Make environment variables get sourced and passed to php-fpm.
