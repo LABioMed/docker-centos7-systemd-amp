@@ -11,6 +11,6 @@
     Require all granted
   </Directory>
   <FilesMatch \.php$>
-    SetHandler "proxy:fcgi://php:9000"
+    SetHandler "proxy:fcgi://%s:9000"
   </FilesMatch>
 </VirtualHost>
