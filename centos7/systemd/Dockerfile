@@ -28,9 +28,9 @@ COPY generate-plain-environment-file /usr/local/bin/
 ADD dbus.service /etc/systemd/system/dbus.service
 RUN systemctl enable dbus.service
 
-RUN rouch /etc/profile.d/environment.env &&\
- touch /etc/profile.d/environment-variables.sh &&\
- chmod 755 /etc/profile.d/environment-variables.sh
+RUN touch /etc/profile.d/environment.env &&\
+ touch /etc/profile.d/environment.sh &&\
+ chmod 755 /etc/profile.d/environment.sh
 
 VOLUME ["/sys/fs/cgroup"]
 VOLUME ["/run"]
