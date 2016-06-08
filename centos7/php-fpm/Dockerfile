@@ -32,7 +32,7 @@ RUN yum -y install\
  rm -rf /tmp/yum*
 
 RUN cp /etc/php-fpm.conf /etc/php-fpm.conf.original &&\
- cp /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.original
+ mv /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.original
 COPY container /
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -41,7 +41,7 @@ RUN systemctl enable php-fpm.service
 
 EXPOSE 9000
 
-# It seems we need this volume for php-fpm to work okay.
+# It seems we need these volumes for php-fpm to work okay.
 VOLUME ["/tmp"]
 
 ONBUILD ARG USERNAME
