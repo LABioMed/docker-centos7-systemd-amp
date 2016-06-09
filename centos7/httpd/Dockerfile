@@ -39,8 +39,6 @@ ONBUILD RUN printf "$(cat /etc/httpd/conf/httpd.conf)"\
  "$DOMAINNAME"\
  "$USERNAME"\
  "$DOMAINNAME"\
- "$DOMAINNAME"\
- "$DOMAINNAME"\
  "$PHPFPMSERVER"\
  > /etc/httpd/sites-available/$DOMAINNAME.conf &&\
  ln -s ../sites-available/$DOMAINNAME.conf /etc/httpd/sites-enabled/$DOMAINNAME.conf &&\
