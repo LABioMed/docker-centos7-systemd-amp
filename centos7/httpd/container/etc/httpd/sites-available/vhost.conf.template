@@ -2,7 +2,7 @@
   ServerAdmin admin@%s
   ServerName %s.localdev
   DocumentRoot /var/www/%s/current/docroot
-  ErrorLog /proc/self/fd/2
+  ErrorLog /proc/self/fd/1
   CustomLog /proc/self/fd/1 combined
   <Directory />
     Options FollowSymLinks
