@@ -25,7 +25,9 @@ RUN yum -y install\
  php-mcrypt\
  php-mysql\
  php-opcache\
+ php-pecl-redis\
  php-pdo\
+ php-pgsql\
  php-process\
  php-tidy\
  php-xml &&\
@@ -36,7 +38,8 @@ RUN cp /etc/php-fpm.conf /etc/php-fpm.conf.original &&\
  mv /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.original
 COPY container /
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&\
+ echo "export PATH=~/.composer/vendor/bin:\$PATH" >> ~/.bash_profile
 
 RUN systemctl enable php-fpm.service
 
