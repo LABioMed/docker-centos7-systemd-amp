@@ -3,14 +3,15 @@ MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 # Install various web applications and php.
 RUN yum -y install\
- MariaDB-client\
- wget\
- patch\
- tar\
  bzip2\
- unzip\
+ MariaDB-client\
  openssh-clients\
- rsync &&\
+ patch\
+ rsync\
+ tar\
+ unzip\
+ wget\
+ which &&\
  yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm &&\
  sed -i '0,/enabled=0/{s//enabled=1/}' /etc/yum.repos.d/remi.repo &&\
  sed -i '0,/enabled=0/{s//enabled=1/}' /etc/yum.repos.d/remi.repo &&\
