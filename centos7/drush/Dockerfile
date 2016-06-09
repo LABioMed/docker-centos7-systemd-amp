@@ -8,11 +8,6 @@ RUN curl -fsSL -o /usr/local/bin/drush "https://github.com/drush-ops/drush/relea
 
 COPY container /
 
-USER $USERNAME
-RUN drush init -y
-
-USER root
-
 ONBUILD ARG USERNAME
 ONBUILD ARG UID
 ONBUILD ARG DOMAINNAME
@@ -31,3 +26,6 @@ ONBUILD RUN printf "$(cat /etc/drush/site-aliases/aliases.drushrc.php)"\
  > /etc/drush/site-aliases/aliases.drushrc.php &&\
  drush core-status -y &&\
  drush init -y
+
+ONBUILD USER $USERNAME
+ONBUILD RUN drush init -y
