@@ -22,7 +22,8 @@ RUN yum -y update &&\
  systemd-container-libs\
  -- install\
  systemd\
- systemd-libs\
+ systemd-libs &&\
+ yum -y install\
  dbus
 
 # Run some systemctl mask'ing.
