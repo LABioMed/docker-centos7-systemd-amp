@@ -2,7 +2,8 @@
 
 set -e
 set -u
-source /usr/local/bin/mariadb-functions.sh
+cd /usr/local/bin/
+source ./mariadb-functions.sh
 
 ERROR_LOG="$VOLUME_HOME/error.log"
 MYSQLD_PID_FILE="$VOLUME_HOME/mysql.pid"

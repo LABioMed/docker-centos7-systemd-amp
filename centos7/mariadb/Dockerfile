@@ -1,14 +1,13 @@
-FROM local/centos7-systemd:base
+FROM labiomed/centos7-systemd:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
+ENV MARIADB_MAJOR=10.1
 ENV VOLUME_HOME=/var/lib/mysql
 
 RUN yum -y install\
  epel-release &&\
- rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB &&\
  yum -y install\
  MariaDB-server\
- MariaDB-client\
  hostname\
  net-tools\
  pwgen\
@@ -25,6 +24,8 @@ COPY container /
 
 # Set TERM env to avoid mysql client error message "TERM environment variable not set" when running from inside the container
 ENV TERM xterm
+
+VOLUME ["/var/lib/mysql"]
 
 EXPOSE 3306
 

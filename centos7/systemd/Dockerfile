@@ -9,7 +9,8 @@ ENV MARIADB_MAJOR=10.1
 RUN printf "$(cat /etc/yum.repos.d/MariaDB.repo)"\
  "$MARIADB_MAJOR"\
  "$MARIADB_MAJOR"\
- > /etc/yum.repos.d/MariaDB.repo
+ > /etc/yum.repos.d/MariaDB.repo &&\
+ rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 
 # Swap out fake systemd for real systemd and add dbus.
 ENV container docker
@@ -40,7 +41,6 @@ RUN systemctl mask\
 RUN systemctl enable dbus.service
 
 # These volumes are required to be able to run systemctl commands.
-VOLUME ["/sys/fs/cgroup"]
-VOLUME ["/run"]
+VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
 
 CMD ["/usr/lib/systemd/systemd"]
