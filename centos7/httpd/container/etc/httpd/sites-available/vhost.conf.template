@@ -2,8 +2,8 @@
   ServerAdmin admin@%s
   ServerName %s.localdev
   DocumentRoot /var/www/%s/current/docroot
-  ErrorLog /dev/stderr
-  CustomLog /dev/stdout combined
+  ErrorLog /proc/self/fd/2
+  CustomLog /proc/self/fd/1 combined
   <Directory />
     Options FollowSymLinks
     DirectoryIndex index.php
