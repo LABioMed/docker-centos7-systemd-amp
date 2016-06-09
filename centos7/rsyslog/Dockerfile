@@ -7,3 +7,5 @@ RUN yum -y install\
  rm -rf /tmp/yum*
 
 RUN systemctl enable rsyslog.service
+
+EXPOSE 514
