@@ -41,6 +41,6 @@ RUN systemctl mask\
 RUN systemctl enable dbus.service
 
 # These volumes are required to be able to run systemctl commands.
-VOLUME ["/sys/fs/cgroup", "/run", "/tmp"]
+VOLUME ["/sys/fs/cgroup", "/run"]
 
 CMD ["/usr/lib/systemd/systemd"]
