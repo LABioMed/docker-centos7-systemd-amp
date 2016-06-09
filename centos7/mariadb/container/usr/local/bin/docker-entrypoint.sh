@@ -12,7 +12,6 @@ MYSQLD_PID_FILE="$VOLUME_HOME/mysql.pid"
 #trap terminate_db SIGINT SIGTERM
 
 install_db
-tail -F $ERROR_LOG & # tail all db logs to stdout
 
 /usr/bin/mysqld_safe & # Launch DB server in the background
 MYSQLD_SAFE_PID=$!

@@ -1,6 +1,6 @@
 [mysqld]
 pid_file          = /var/lib/mysql/mysql.pid
-log_error         = /proc/self/fd/1
+log_error         = /dev/stderr
 log_warnings      = 2
 
 # General logging has huge performance penalty therefore is disabled by default
