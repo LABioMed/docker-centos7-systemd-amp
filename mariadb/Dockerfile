@@ -18,10 +18,6 @@ RUN yum -y install\
  mkdir /docker-entrypoint-initdb.d\
  /var/log/mysql/
 
-# Logging all goes to our httpd logs.
-RUN ln -sf /dev/stdout $VOLUME_HOME/error.log &&\
- ln -sf /dev/stderr $VOLUME_HOME/error.log
-
 RUN systemctl enable mariadb.service
 
 COPY container /
