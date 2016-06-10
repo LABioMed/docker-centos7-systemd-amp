@@ -3,7 +3,7 @@
 set -e
 set -u
 cd /usr/local/bin/
-source ./mariadb-functions.sh
+source mariadb-functions.sh
 
 ERROR_LOG="$VOLUME_HOME/error.log"
 MYSQLD_PID_FILE="$VOLUME_HOME/mysql.pid"

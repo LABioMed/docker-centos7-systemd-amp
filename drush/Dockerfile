@@ -1,4 +1,4 @@
-FROM labiomed/centos7-systemd:php-base
+FROM local/centos7-systemd-amp:php-base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ENV DRUSH_VERSION 8.1.2

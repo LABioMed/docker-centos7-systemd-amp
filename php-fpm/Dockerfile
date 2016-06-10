@@ -1,4 +1,4 @@
-FROM labiomed/centos7-systemd:php-base
+FROM local/centos7-systemd-amp:php-base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 # Install various web applications and php.

@@ -1,4 +1,4 @@
-FROM labiomed/centos7-systemd:base
+FROM local/centos7-systemd-amp:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ENV MARIADB_MAJOR=10.1
@@ -17,10 +17,6 @@ RUN yum -y install\
  rm -rf /var/lib/mysql/* &&\
  mkdir /docker-entrypoint-initdb.d\
  /var/log/mysql/
-
-# Logging all goes to our httpd logs.
-RUN ln -sf /dev/stdout $VOLUME_HOME/error.log &&\
- ln -sf /dev/stderr $VOLUME_HOME/error.log
 
 RUN systemctl enable mariadb.service
 
