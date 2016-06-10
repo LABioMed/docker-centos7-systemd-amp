@@ -10,11 +10,8 @@ RUN yum -y update &&\
  yum clean all &&\
  rm -rf /tmp/yum*
 
-RUN cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.original &&\
+RUN cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.original
 
-# Logging all goes to our httpd logs.
-RUN ln -sf /dev/stdout /var/log/httpd/access.log &&\
- ln -sf /dev/stderr /var/log/httpd/error.log
 COPY container /
 
 RUN systemctl enable httpd.service

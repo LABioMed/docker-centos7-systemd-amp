@@ -10,10 +10,6 @@ RUN yum -y install\
 RUN cp /etc/php-fpm.conf /etc/php-fpm.conf.original &&\
  mv /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.original
 
-# Logging all goes to our php-fpm logs.
-RUN ln -sf /dev/stdout /var/log/php-fpm/daemon.log &&\
- ln -sf /dev/stderr /var/log/php-fpm/daemon.log
-
 COPY container /
 
 RUN systemctl enable php-fpm.service
@@ -28,7 +24,8 @@ ONBUILD ARG UID
 ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
- mkdir -p /home/$USERNAME &&\
+ mkdir -p /home/$USERNAME\
+ /var/log/php-fpm &&\
  chown $USERNAME:$USERNAME /home/$USERNAME /var/log/php-fpm /usr/local/bin/composer &&\
  chgrp $USERNAME /var/log/php-fpm
 
