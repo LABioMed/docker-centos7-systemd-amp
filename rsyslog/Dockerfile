@@ -1,4 +1,4 @@
-FROM labiomed/centos7-systemd:base
+FROM local/centos7-systemd-amp:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 RUN yum -y install\
