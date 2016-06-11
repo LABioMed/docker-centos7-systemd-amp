@@ -1,0 +1,23 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - make
+
+install:
+  - docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD
+
+script:
+  - make version
+  - make test
+
+after_success:
+  - push
+
+notifications:
+  email: false
+
+env:
+  - LOWERCASE_REPO_SLUG=labiomed/centos7-systemd-amp

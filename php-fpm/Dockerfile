@@ -24,7 +24,8 @@ ONBUILD ARG UID
 ONBUILD ENV USERNAME="$USERNAME" UID="$UID"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
- mkdir -p /home/$USERNAME &&\
+ mkdir -p /home/$USERNAME\
+ /var/log/php-fpm &&\
  chown $USERNAME:$USERNAME /home/$USERNAME /var/log/php-fpm /usr/local/bin/composer &&\
  chgrp $USERNAME /var/log/php-fpm
 
