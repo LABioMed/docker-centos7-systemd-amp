@@ -21,3 +21,4 @@ notifications:
 
 env:
   - LOWERCASE_REPO_SLUG=labiomed/centos7-systemd-amp
+  
