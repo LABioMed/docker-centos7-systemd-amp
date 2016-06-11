@@ -6,6 +6,10 @@ services:
 before_install:
   - make
 
+script:
+  - make run
+  - make test
+
 after_success:
   - push
 
