@@ -11,7 +11,10 @@ script:
   - make test
 
 after_success:
-  - if [ "${TRAVIS_BRANCH}" == "master" ]; then docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS"; docker push ${LOWERCASE_REPO_SLUG}; fi
+  - if [ "${TRAVIS_BRANCH}" == "master" ]; then
+    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USER" -p="$DOCKER_PASS";
+    docker push ${LOWERCASE_REPO_SLUG};
+    fi
 
 notifications:
   email: false
