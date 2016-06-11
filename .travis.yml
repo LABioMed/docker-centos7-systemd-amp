@@ -7,7 +7,7 @@ before_install:
   - make
 
 install:
-  - docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
+  - docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD
 
 script:
   - make version
