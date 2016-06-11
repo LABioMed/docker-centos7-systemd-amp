@@ -11,7 +11,7 @@ script:
   - make test
 
 after_success:
-  - push
+  - make push
 
 notifications:
   email: false
