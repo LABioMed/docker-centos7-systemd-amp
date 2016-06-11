@@ -1,23 +1,21 @@
 sudo: required
-
 services:
-  - docker
-
+- docker
 before_install:
-  - make
-
+- make
 install:
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-
+- docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 script:
-  - make version
-  - make test
-
+- make version
+- make test
 after_success:
-  - push
-
+- push
 notifications:
   email: false
-
 env:
+  matrix:
   - LOWERCASE_REPO_SLUG=labiomed/centos7-systemd-amp
+  global:
+  - secure: NQ0WVtxuz7GrA+vmZA7kj2lzl3wgGclcDtA1XQR1KynIprtfeC1TjozisbSwi9eMpDODei17kL9h/v7k8KZd0YRh8N/syGEBStIVLjxono7mZ1Z8me0pWToigtXzwPBNP3zdsw0VzHq8DqXPGH5NND2V1P+I5wy8pTOEWtD6kUrGbJJbhBlKwop9u0oZ0F85UdNzPnuoF8cAAD3SDwNOhpYja9qFI16rJlx+3RP6zyoj0DaIRFd8GM/mSV3UWpkPdxjKlzUSSl4YUcfm9zEIpYUf1xWV1WMUVBx9sXXGOvV2xxfc3rmgkhuS5fAf4AbgBTSsqzZ/OoH2T9q2SZ2bdZg696TmENK3pj4Ks8nMGZlNRTCXNxC666xhsiiYx05Z4PkbOwOZaM5wnrn1rywnvjhd6yyJeOAA4R3rSwXS3642+3nCtThrJ2uSKRnTAZqM7EksVMZFOKE0UBaXaEbZJIKfjVDezxnu3jgYg+Hvte+8MzwWFhXzG0Y2Wi0cOYo54ef77HB7VU/cNpEH+ap6ZoYh6NvETRVxyYga8nqwHvPcPNfvCK3Af0boi6+efa9FTfKkWv2tTuk6AWrTxzj1LPLFm9JfU8P3EJOB0A4O0FlwVcwTEDEdfvqnL3ucKvVFviGWW2Y3wViinemkXz+bcX0vdfpXc8pcqmQScvBivx8=
+  - secure: pGFyskFIkB4Zdz1U9y7632xe/SU6yA6qOYqtEsPR8iLs2tdce8lLpzvr10BWaOzbO9NtCk2uoT/MpLv0V1UgrmnFgJ4sdExwWCg2Uv2mWfwfIpEjP3mYXmx3Ne7ZB620JG8Kn7dyYNUCvy2eQ/skYx3wT7vLmiVhBrdXjb+W0lhXhKZU44daKZ/4yg1i+ZqbibB7gUC0WDSer8qYda+n+/dJ2Nt116AHhs+JEMtYakuDON6t/HckhJeEUkWfNyUvPTrsDSHAyj6DrQ0FATSlLSbqkHmEetkWDoEgrbaNOZg2oSMeSw3jKqxEC55eypu6Wjf84cx9QKWTvr+e7kBYAYj+ONLMRoQqz3+SJjm38JPswFXt5BDx1Lmz4E0asPholhbb8gfuZN5CcaKVCx/FqeJtTfqbfnVlxpI7+v4FciyAKE9gp5mqD/YZFsR+6EVbAi27Dteq7+JxmD09Wy57H4feG4mVeRLJKsfgnKNIlq/MoosFOkP0Y0tg+Yj6R3gY2l8zZ6bALfxQ2kKwPOx6VmxwUR7twVJeNtFFv7SdBtP2CS+PV3QsN7aCqo16YaPQpRjaj0oKkvQM10oaP/txeLvjr8UjTBFQSRM2H/mWByh/dFTiBEm/aDX0soyWk7Cq/k7dbl90Ab+V0pUn8xOlJK+a0F0McBMyA2Kv+04936k=
+  - secure: UyoWvITiJLiv3mtGe5YSC0GfO5pHFV7Z/SSSeStdKylxCP6HcopENKozAqpy593zYXXf7VBeD6a6OkJyyrqs3V7AoZln/mQwb+KBGD4t2hp5wbZh0+U5/xoqJNDeTTcPvAuIHMBmlT/lAaXUxHrxhCHLyzOUjk/ey5/zx/0DJcwBplGVBcE442IE39ymictS+l/h1uivb4IDN2/HwPihi26Fd35lg43NIFmBW3Rv3jXbprdwL/2jP4T3+BYcUfbas66daVCSH7ArUPT1Do49j8eccW2X71/08cLGUox4lRVb+wtdhiHLy/YnyozI0CTAVnj0rkkDjjq/kXcabqZh29nR0/4S0nPIkyGi8dkKCGfXhB9Mx6El3aeLXIMEar/3CIRh5uzUTCtAcGsf/q8DEIgFAgJLJI5OvopKdcnAMV9RWj7H/WKWu8X8MQFyblfryhM/xy9164UO+wt0oSMCSADcz2A1gJTzJxWoH0uc0H3d13+WUdmPECXEwXpJe4YpFDtLZ3eVSFo/kFhCpl70LPvUgdb7s46JXGGnmwU/BniTDMU15ANit7fbW21XMpXY6ta9ubAK10sRstpPhxyfjowaYMvfv9P8QckQ3Bsyd/f+W/F4ZMTy1bURAO7COwhSp7e/pkV3IYb+nOWByQA0zKPswnBq6w3WhWYka7kIvIM=
