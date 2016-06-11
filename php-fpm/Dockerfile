@@ -1,4 +1,4 @@
-FROM local/centos7-systemd-amp:php-base
+FROM labiomed/centos7-systemd-amp:php-base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 # Install various web applications and php.
@@ -9,10 +9,6 @@ RUN yum -y install\
 
 RUN cp /etc/php-fpm.conf /etc/php-fpm.conf.original &&\
  mv /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.original
-
-# Logging all goes to our php-fpm logs.
-RUN ln -sf /dev/stdout /var/log/php-fpm/daemon.log &&\
- ln -sf /dev/stderr /var/log/php-fpm/daemon.log
 
 COPY container /
 

@@ -1,4 +1,4 @@
-FROM local/centos7-systemd-amp:base
+FROM labiomed/centos7-systemd-amp:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ENV MARIADB_MAJOR=10.1

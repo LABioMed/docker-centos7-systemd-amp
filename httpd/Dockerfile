@@ -1,4 +1,4 @@
-FROM local/centos7-systemd-amp:base
+FROM labiomed/centos7-systemd-amp:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 RUN yum -y update &&\
@@ -10,11 +10,8 @@ RUN yum -y update &&\
  yum clean all &&\
  rm -rf /tmp/yum*
 
-RUN cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.original &&\
+RUN cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.original
 
-# Logging all goes to our httpd logs.
-RUN ln -sf /dev/stdout /var/log/httpd/access.log &&\
- ln -sf /dev/stderr /var/log/httpd/error.log
 COPY container /
 
 RUN systemctl enable httpd.service
@@ -28,7 +25,7 @@ ONBUILD ARG PHPFPMSERVER
 ONBUILD ENV USERNAME="$USERNAME" UID="$UID" DOMAINNAME="$DOMAINNAME" PHPFPMSERVER="$PHPFPMSERVER"
 ONBUILD RUN useradd -d /home/$USERNAME -m -s /bin/bash --uid $UID $USERNAME &&\
  echo "$USERNAME":"$USERNAME" | chpasswd &&\
- mkdir -p /home/$USERNAME /var/www/$USERNAME/logs &&\
+ mkdir -p /home/$USERNAME /var/www/$USERNAME/logs /var/log/httpd &&\
  chown $USERNAME:$USERNAME /home/$USERNAME &&\
  chgrp $USERNAME /var/log/httpd &&\
  chmod g+rx /var/log/httpd
