@@ -1,12 +1,17 @@
 sudo: required
+
 services:
-- docker
+  - docker
+
 before_install:
-- make
+  - make
+
 after_success:
-- push
+  - push
+
 notifications:
   email: false
+
 env:
   matrix:
   - LOWERCASE_REPO_SLUG=labiomed/centos7-systemd-amp
