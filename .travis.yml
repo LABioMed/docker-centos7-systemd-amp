@@ -7,7 +7,7 @@ before_install:
   - make
 
 install:
-  - docker login --email="${DOCKER_HUB_EMAIL}" --username="${DOCKER_HUB_USERNAME}" --password="${DOCKER_HUB_PASSWORD}"
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 
 script:
   - make version
@@ -21,4 +21,3 @@ notifications:
 
 env:
   - LOWERCASE_REPO_SLUG=labiomed/centos7-systemd-amp
-  
