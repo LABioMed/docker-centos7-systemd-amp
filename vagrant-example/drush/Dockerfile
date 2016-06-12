@@ -1,1 +1,0 @@
-FROM labiomed/centos7-systemd-amp:drush
