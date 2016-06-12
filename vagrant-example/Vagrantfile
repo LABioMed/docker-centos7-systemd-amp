@@ -25,8 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       d.build_dir = "app"
       d.build_args = ["-t", "local/#{ENV['NAMESPACE']}-app",
                       "--build-arg", "USERNAME=#{ENV['USERNAME']}",
-                      "--build-arg", "UID=#{ENV['UID']}",
-                      "--build-arg", "DOMAINNAME=#{ENV['DOMAINNAME']}",]
+                      "--build-arg", "UID=#{ENV['UID']}",]
       d.name = "#{ENV['NAMESPACE']}_app"
       d.create_args = ["--log-driver=journald"]
       d.remains_running = false
@@ -42,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "db" do |db|
     db.vm.provider "docker" do |d|
       d.build_dir = "db"
-      d.build_args = ["-t", "local/#{ENV['']}-db",
+      d.build_args = ["-t", "local/#{ENV['NAMESPACE']}-db",
                       "--build-arg", "MARIADB_ROOT_PASS=#{ENV['MARIADB_ROOT_PASS']}",
                       "--build-arg", "MARIADB_USER=#{ENV['MARIADB_USER']}",
                       "--build-arg", "MARIADB_PASS=#{ENV['MARIADB_PASS']}",
@@ -50,8 +49,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       d.name = "#{ENV['NAMESPACE']}_db"
       d.create_args = ["--log-driver=journald"]
       d.vagrant_vagrantfile = "HostVagrantfile"
-      d.volumes = ["/sys/fs/cgroup:/sys/fs/cgroup:ro",
-                   "#{ENV['PROJECTDIR']}/db/sql:/docker-entrypoint-initdb.d",]
+      d.volumes = ["/sys/fs/cgroup:/sys/fs/cgroup:ro",]
       if ENV.has_key?('VAGRANT_FORCE_VM')
         d.force_host_vm = true
       end
@@ -100,8 +98,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
     end
     httpd.vm.synced_folder ".", "/vagrant", disabled: true
-    httpd.vm.hostname = "#{ENV['SITENAME']}.localdev"
-    httpd.vm.network :private_network, ip: "#{ENV['PRIVATEIP']}"
   end
 
   config.vm.define "drush" do |drush|
