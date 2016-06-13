@@ -21,7 +21,7 @@ test:
 
 push:
 	if [ "${TRAVIS_BRANCH}" = "master" ]; then \
-	docker login -e="." -u="nalipaz" -p="BgyD3v76bbIJDsy1e81KSP3186sRhynzTrhq6eUbBOJPZgqs2EeITPdDy45As5X0" quay.io \
+	docker login -e="." -u="nalipaz" -p="BgyD3v76bbIJDsy1e81KSP3186sRhynzTrhq6eUbBOJPZgqs2EeITPdDy45As5X0" quay.io; \
 	docker push quay.io/${LOWERCASE_REPO_SLUG}:base; \
 	docker push quay.io/${LOWERCASE_REPO_SLUG}:app; \
 	docker push quay.io/${LOWERCASE_REPO_SLUG}:mariadb; \
