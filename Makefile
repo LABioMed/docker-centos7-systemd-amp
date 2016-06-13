@@ -22,11 +22,11 @@ test:
 push:
 	if [ "${TRAVIS_BRANCH}" = "master" ]; then \
 	docker login -e="${DOCKER_EMAIL}" -u="${DOCKER_USER}" -p="${DOCKER_PASS}"; \
-	docker push ${LOWERCASE_REPO_SLUG}:base; \
-	docker push ${LOWERCASE_REPO_SLUG}:app; \
-	docker push ${LOWERCASE_REPO_SLUG}:mariadb; \
-	docker push ${LOWERCASE_REPO_SLUG}:php-base; \
-	docker push ${LOWERCASE_REPO_SLUG}:php-fpm; \
-	docker push ${LOWERCASE_REPO_SLUG}:httpd; \
-	docker push ${LOWERCASE_REPO_SLUG}:drush; \
+	docker push quay.io/${LOWERCASE_REPO_SLUG}:base; \
+	docker push quay.io/${LOWERCASE_REPO_SLUG}:app; \
+	docker push quay.io/${LOWERCASE_REPO_SLUG}:mariadb; \
+	docker push quay.io/${LOWERCASE_REPO_SLUG}:php-base; \
+	docker push quay.io/${LOWERCASE_REPO_SLUG}:php-fpm; \
+	docker push quay.io/${LOWERCASE_REPO_SLUG}:httpd; \
+	docker push quay.io/${LOWERCASE_REPO_SLUG}:drush; \
 	fi
