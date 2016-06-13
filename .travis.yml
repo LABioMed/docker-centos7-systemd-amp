@@ -19,4 +19,3 @@ notifications:
 env:
   matrix:
   - LOWERCASE_REPO_SLUG=labiomed/centos7-systemd-amp
-  - APP_NAME=centos7-systemd-amp
