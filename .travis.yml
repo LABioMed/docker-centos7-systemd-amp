@@ -18,4 +18,6 @@ notifications:
 
 env:
   matrix:
-  - LOWERCASE_REPO_SLUG=labiomed/centos7-systemd-amp
+  - DOCKER_REGISTRY=quay.io
+  - DOCKER_REPO_USERNAME=labiomed
+  - DOCKER_REPO_SLUG=centos7-systemd-amp
