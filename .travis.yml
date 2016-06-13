@@ -19,7 +19,7 @@ notifications:
 
 env:
   global:
-    - DOCKER_IMAGES=base app mariadb php-base php-fpm httpd drush
+    - DOCKER_IMAGES="base app mariadb php-base php-fpm httpd drush"
     - DOCKER_REGISTRY=quay.io
     - DOCKER_REPO_USERNAME=labiomed
     - DOCKER_REPO_SLUG=centos7-systemd-amp
