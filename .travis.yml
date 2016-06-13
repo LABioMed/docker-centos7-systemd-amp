@@ -17,7 +17,7 @@ notifications:
   email: false
 
 env:
-  matrix:
-  - DOCKER_REGISTRY=quay.io
-  - DOCKER_REPO_USERNAME=labiomed
-  - DOCKER_REPO_SLUG=centos7-systemd-amp
+  global:
+    - DOCKER_REGISTRY=quay.io
+    - DOCKER_REPO_USERNAME=labiomed
+    - DOCKER_REPO_SLUG=centos7-systemd-amp
