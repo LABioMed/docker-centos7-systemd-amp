@@ -18,6 +18,14 @@ notifications:
   email: false
 
 env:
+  matrix:
+    - tag=base
+    - tag=app
+    - tag=mariadb
+    - tag=php-base
+    - tag=php-fpm
+    - tag=httpd
+    - tag=drush
   global:
     - DOCKER_IMAGES="base app mariadb php-base php-fpm httpd drush"
     - DOCKER_REGISTRY=quay.io
