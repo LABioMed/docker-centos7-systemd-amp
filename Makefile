@@ -1,32 +1,29 @@
 build:
-	docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:base base
-	docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:app app
-	docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:mariadb mariadb
-	docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:php-base php-base
-	docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:php-fpm php-fpm
-	docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:httpd httpd
-	docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:drush drush
+	for image in ${DOCKER_IMAGES}; do \
+	  docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${image} ${image}; \
+	done
 
 run:
-	docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:base /usr/lib/systemd/systemd
-	docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:app /usr/lib/systemd/systemd
-	docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:mariadb /usr/lib/systemd/systemd
-	docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:php-base /usr/lib/systemd/systemd
-	docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:php-fpm /usr/lib/systemd/systemd
-	docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:httpd /usr/lib/systemd/systemd
-	docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:drush /usr/lib/systemd/systemd
+	for image in ${DOCKER_IMAGES}; do \
+	  docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${image} /usr/lib/systemd/systemd
+	done
 
 test:
 	@make run
 
-push:
+push_quay:
 	if [ "${TRAVIS_BRANCH}" = "master" ]; then \
-	docker login -e="." -u="nalipaz" -p="BgyD3v76bbIJDsy1e81KSP3186sRhynzTrhq6eUbBOJPZgqs2EeITPdDy45As5X0" quay.io; \
-	docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:base; \
-	docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:app; \
-	docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:mariadb; \
-	docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:php-base; \
-	docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:php-fpm; \
-	docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:httpd; \
-	docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:drush; \
+	  docker login -e="${QUAY_EMAIL}" -u="${QUAY_USER}" -p="${QUAY_PASS}" quay.io; \
+	  for image in ${DOCKER_IMAGES}; do \
+	    docker push ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${image}; \
+	  done
+	fi
+
+push_hub:
+	if [ "${TRAVIS_BRANCH}" = "master" ]; then \
+	  docker login -e="${DOCKER_HUB_EMAIL}" -u="${DOCKER_HUB_USER}" -p="${DOCKER_HUB_PASS}"; \
+	  for image in ${DOCKER_IMAGES}; do \
+	    docker tag ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${image} ${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${image}; \
+	    docker push ${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${images[i]}; \
+	  done
 	fi
