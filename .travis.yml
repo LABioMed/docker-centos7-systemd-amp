@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:\${tag} \${tag}; \
+  - docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${tag} ${tag}; \
 
 script:
   - docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${tag} /usr/lib/systemd/systemd
