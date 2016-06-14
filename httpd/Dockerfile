@@ -1,4 +1,4 @@
-FROM labiomed/centos7-systemd-amp:base
+FROM quay.io/labiomed/centos7-systemd-amp:base
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 RUN yum -y update &&\
