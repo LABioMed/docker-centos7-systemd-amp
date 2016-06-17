@@ -1,0 +1,10 @@
+[Unit]
+Description=Drush Cron for %s
+
+[Service]
+Type=simple
+ExecStart=/bin/bash --login -c "/usr/local/bin/drush @%s cron"
+User=%s
+
+[Install]
+WantedBy=multi-user.target

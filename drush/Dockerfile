@@ -27,5 +27,12 @@ ONBUILD RUN printf "$(cat /etc/drush/site-aliases/aliases.drushrc.php)"\
  drush core-status -y &&\
  drush init -y
 
-ONBUILD USER $USERNAME
-ONBUILD RUN drush init -y
+ONBUILD RUN printf "$(cat /usr/lib/systemd/system/drush-cron.service)"\
+ "$DOMAINNAME"\
+ "$USERNAME"\
+ "$USERNAME"\
+ > /usr/lib/systemd/system/drush-cron.service &&\
+ printf "$(cat /usr/lib/systemd/system/drush-cron.timer)"\
+ "$DOMAINNAME"\
+ > /usr/lib/systemd/system/drush-cron.timer &&\
+ systemctl enable drush-cron.timer
