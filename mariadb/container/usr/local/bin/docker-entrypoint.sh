@@ -14,6 +14,9 @@ if [ ! -d ${VOLUME_HOME}/mysql ]; then
 
     install_db
 
+    /usr/bin/mysqld_safe & # Launch DB server in the background
+    MYSQLD_SAFE_PID=$!
+
     wait_for_db
     show_db_status
     create_db_user
