@@ -3,8 +3,11 @@ sudo: required
 services:
   - docker
 
+matrix:
+  fast_finish: true
+
 before_install:
-  - docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${tag} ${tag}; \
+  - docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${tag} ${tag};
 
 script:
   - docker run -d -v /sys/fs/cgroup:/sys/fs/cgroup:ro ${DOCKER_REGISTRY}/${DOCKER_REPO_USERNAME}/${DOCKER_REPO_SLUG}:${tag} /usr/lib/systemd/systemd
@@ -33,7 +36,6 @@ env:
     - tag=httpd
     - tag=drush
   global:
-    - DOCKER_IMAGES="base app mariadb php-base php-fpm httpd drush"
     - DOCKER_REGISTRY=quay.io
     - DOCKER_REPO_USERNAME=labiomed
     - DOCKER_REPO_SLUG=centos7-systemd-amp
