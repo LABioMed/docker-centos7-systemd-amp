@@ -2,9 +2,11 @@
 
 Images all based on CentOS 7 (official image). These images together are great for running a full Drupal stack but could certainly be used for most any LAMP-based web application.
 ## Build Status
-[GitHub Repo](https://github.com/LABioMed/docker-centos7-systemd-amp)
-Travis CI: [![Build Status](https://travis-ci.org/LABioMed/docker-centos7-systemd-amp.svg?branch=master)](https://travis-ci.org/LABioMed/docker-centos7-systemd-amp)
-Quay: [![Docker Repository on Quay](https://quay.io/repository/labiomed/centos7-systemd-amp/status "Docker Repository on Quay")](https://quay.io/repository/labiomed/centos7-systemd-amp)
+GitHub Repo: [![GitHub commits](https://img.shields.io/github/commits-since/LABioMed/docker-centos7-systemd-amp/99fbe19f80ef67d24018921e74d1c92808519178.svg?maxAge=2592000&label=commits)](https://github.com/LABioMed/docker-centos7-systemd-amp)  
+Docker Pulls: [![Docker Pulls](https://img.shields.io/docker/pulls/labiomed/centos7-systemd-amp.svg?maxAge=2592000)](https://hub.docker.com/r/labiomed/centos7-systemd-amp/)  
+Docker Stars: [![Docker Stars](https://img.shields.io/docker/stars/labiomed/centos7-systemd-amp.svg?maxAge=2592000)](https://hub.docker.com/r/labiomed/centos7-systemd-amp/)  
+Travis CI: [![Travis](https://img.shields.io/travis/LABioMed/docker-centos7-systemd-amp.svg?maxAge=2592000)](https://travis-ci.org/LABioMed/docker-centos7-systemd-amp)  
+Quay: [![Docker Repository on Quay](https://quay.io/repository/labiomed/centos7-systemd-amp/status "Docker Repository on Quay")](https://quay.io/repository/labiomed/centos7-systemd-amp)  
 
 ## About this repo
 Each service is available as a different tag here and should be used as a base image for your own custom image. The images available are:
