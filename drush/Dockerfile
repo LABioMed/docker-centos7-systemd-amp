@@ -35,4 +35,5 @@ ONBUILD RUN printf "$(cat /usr/lib/systemd/system/drush-cron.service)"\
  printf "$(cat /usr/lib/systemd/system/drush-cron.timer)"\
  "$DOMAINNAME"\
  > /usr/lib/systemd/system/drush-cron.timer &&\
- systemctl enable drush-cron.timer
+ systemctl enable drush-cron.timer &&\
+ systemctl enable drush-cron

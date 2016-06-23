@@ -2,7 +2,7 @@
 Description=Drush Cron for %s
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/bin/bash --login -c "/usr/local/bin/drush @%s cron"
 User=%s
 

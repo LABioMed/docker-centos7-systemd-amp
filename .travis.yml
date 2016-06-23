@@ -28,6 +28,7 @@ notifications:
 
 env:
   matrix:
+    - tag=base-centos7
     - tag=base
     - tag=app
     - tag=mariadb

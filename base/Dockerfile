@@ -1,16 +1,7 @@
-FROM centos:centos7
+FROM quay.io/labiomed/centos7-systemd-amp:base-centos7
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 COPY container /
-RUN chmod 755 /etc/profile.d/environment.sh
-
-# Make official MariaDB repo available on all images.
-ENV MARIADB_MAJOR=10.1
-RUN printf "$(cat /etc/yum.repos.d/MariaDB.repo)"\
- "$MARIADB_MAJOR"\
- "$MARIADB_MAJOR"\
- > /etc/yum.repos.d/MariaDB.repo &&\
- rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 
 # Swap out fake systemd for real systemd and add dbus.
 ENV container docker
