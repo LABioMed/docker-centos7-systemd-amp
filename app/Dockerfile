@@ -1,4 +1,4 @@
-FROM quay.io/labiomed/centos7-systemd-amp:base
+FROM centos:centos7
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ONBUILD ARG USERNAME
