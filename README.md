@@ -1,5 +1,7 @@
 # CentOS 7, Systemd, and AMP (**A**pache, **M**ysql, **P**HP)
 
+[![Join the chat at https://gitter.im/LABioMed/docker-centos7-systemd-amp](https://badges.gitter.im/LABioMed/docker-centos7-systemd-amp.svg)](https://gitter.im/LABioMed/docker-centos7-systemd-amp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Images all based on CentOS 7 (official image). These images together are great for running a full Drupal stack but could certainly be used for most any LAMP-based web application.
 ## Build Status
 GitHub Repo: [![GitHub commits](https://img.shields.io/github/commits-since/LABioMed/docker-centos7-systemd-amp/99fbe19f80ef67d24018921e74d1c92808519178.svg?maxAge=2592000&label=commits)](https://github.com/LABioMed/docker-centos7-systemd-amp)  
