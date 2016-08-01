@@ -3,8 +3,13 @@ MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
 ENV DRUSH_VERSION 8.1.2
 
+RUN yum -y install\
+ git
+
 RUN curl -fsSL -o /usr/local/bin/drush "https://github.com/drush-ops/drush/releases/download/$DRUSH_VERSION/drush.phar" &&\
- chmod +x /usr/local/bin/drush
+ curl -fsSL -o /usr/local/bin/drupal "https://drupalconsole.com/installer" &&\
+ chmod +x /usr/local/bin/drush &&\
+ chmod +x /usr/local/bin/drupal
 
 COPY container /
 

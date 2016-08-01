@@ -1,6 +1,8 @@
 FROM centos:centos7
 MAINTAINER Nicholas Alipaz <nalipaz@labiomed.org>
 
+COPY container /
+
 RUN chmod 755 /etc/profile.d/environment.sh
 
 # Make official MariaDB repo available on all images.
